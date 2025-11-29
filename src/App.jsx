@@ -1,11 +1,15 @@
 import React from 'react'
-import  Navbar  from '../src/components/Navbar';
-import Footer from './components/Footer';
+
+import { Route, Routes } from 'react-router-dom';
+import Body from './components/Body';
 const App = () => {
   return (
     <div>
-      <Navbar/>
-      <Footer/>
+      <Routes>
+        <Route>
+          <Route path="/" element={<Body/>} />
+        </Route>
+      </Routes>
     </div>
   )
 }

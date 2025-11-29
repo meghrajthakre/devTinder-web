@@ -6,7 +6,7 @@ const navbar = () => {
       <div className="navbar bg-base-200 shadow-sm px-2 pr-4">
   <div className="flex-1 mr-1.5 ">
     <a className="btn btn-ghost text-xl">
-      <img src="public/assets/logo.webp" className='w-10 h-10' />
+      <img src="assets/logo.webp" className='w-10 h-10' />
       DevTinder</a>
   </div>
   <div className="flex gap-2">
