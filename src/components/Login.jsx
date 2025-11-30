@@ -4,7 +4,8 @@ import React, { useState } from "react";
 const Login = () => {
     const [email, setEmail] = useState('meghraj@123gmail.com');
     const [password, setPassword] = useState('Meghraj@123');
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [user , setUser] = useState(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,6 +18,7 @@ const Login = () => {
                 { withCredentials: true }
             );
             console.log("LOGIN SUCCESS:", res.data);
+            setUser(res.data)
             setEmail("")
             setPassword("")
             setLoading(false)
