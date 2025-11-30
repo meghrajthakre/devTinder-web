@@ -1,22 +1,31 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 const Login = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('meghraj@123gmail.com');
+    const [password, setPassword] = useState('Meghraj@123');
 
-    const handleSubmit = (e) =>{
-        e.preventDefault()
-        
-        
-        
-    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const res = await axios.post(
+                "http://localhost:3001/login",
+                { email, password }
+            );
+            console.log("LOGIN SUCCESS:", res.data);
+        } catch (err) {
+            console.log("LOGIN ERROR:", err);
+        }
+    };
+
     return (
-        <div className="min-h-[90vh] flex items-center justify-center px-4">
-            <div className="card bg-base-200/60 backdrop-blur-md shadow-xl w-96 p-6 rounded-2xl border border-base-300/40">
-                <div className="card-body">
+        <div className="min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+            <div className="card bg-base-200/60 backdrop-blur-xl shadow-xl w-full max-w-sm sm:max-w-md p-6 sm:p-8 rounded-2xl border border-base-300/40">
+                <form onSubmit={handleSubmit} className="card-body p-0">
 
                     {/* Title */}
-                    <h2 className="text-3xl font-bold mb-6 text-center">
+                    <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-center">
                         Login
                     </h2>
 
@@ -41,21 +50,25 @@ const Login = () => {
                             <span className="label-text">Password</span>
                         </label>
                         <input
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             type="password"
                             placeholder="Password"
                             className="input input-bordered w-full rounded-lg bg-base-100 focus:ring-2 focus:ring-primary/60"
                             minLength="4"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
                             required
                         />
                     </div>
 
                     {/* Button */}
-                    <button onClick={handleSubmit} className="btn btn-primary w-full rounded-lg text-lg h-12">
+                    <button
+                        type="submit"
+                        className="btn btn-primary w-full rounded-lg text-lg h-12"
+                    >
                         Login
                     </button>
-                </div>
+
+                </form>
             </div>
         </div>
     );
