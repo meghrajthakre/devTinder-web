@@ -4,16 +4,22 @@ import React, { useState } from "react";
 const Login = () => {
     const [email, setEmail] = useState('meghraj@123gmail.com');
     const [password, setPassword] = useState('Meghraj@123');
+    const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
 
         try {
             const res = await axios.post(
                 "http://localhost:3001/login",
-                { email, password }
+                { email, password },
+                { withCredentials: true }
             );
             console.log("LOGIN SUCCESS:", res.data);
+            setEmail("")
+            setPassword("")
+            setLoading(false)
         } catch (err) {
             console.log("LOGIN ERROR:", err);
         }
@@ -63,9 +69,10 @@ const Login = () => {
                     {/* Button */}
                     <button
                         type="submit"
+                        disabled={loading}
                         className="btn btn-primary w-full rounded-lg text-lg h-12"
                     >
-                        Login
+                        {loading ? "Logging in..." : "Login"}
                     </button>
 
                 </form>
