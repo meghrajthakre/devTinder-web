@@ -1,10 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Sun, Moon } from "lucide-react";
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
   const [theme, setTheme] = useState("light");
-
+  const data = useSelector((state) => state.user);
+  
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
@@ -25,7 +27,7 @@ const Navbar = () => {
       </div>
 
       <div className="flex gap-2 items-center">
-        
+
 
 
         {/* THEME TOGGLE BUTTON */}
@@ -34,7 +36,7 @@ const Navbar = () => {
         </button>
 
 
-        <div className="dropdown dropdown-end">
+        <div className="dropdown dropdown-end ">
           <div
             tabIndex={0}
             role="button"

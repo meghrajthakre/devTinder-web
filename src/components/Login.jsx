@@ -1,11 +1,15 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addUser, removeUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
     const [email, setEmail] = useState('meghraj@123gmail.com');
     const [password, setPassword] = useState('Meghraj@123');
     const [loading, setLoading] = useState(false);
-    const [user , setUser] = useState(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,10 +22,11 @@ const Login = () => {
                 { withCredentials: true }
             );
             console.log("LOGIN SUCCESS:", res.data);
-            setUser(res.data)
             setEmail("")
             setPassword("")
-            setLoading(false)
+            setLoading(false);
+            dispatch(addUser(res.data));
+            // navigate('/feed')
         } catch (err) {
             console.log("LOGIN ERROR:", err);
         }
