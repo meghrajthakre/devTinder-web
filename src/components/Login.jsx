@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constant";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -26,15 +27,15 @@ const Login = () => {
             setPassword("")
             setLoading(false);
             dispatch(addUser(res.data));
-            // navigate('/feed')
+            navigate('/feed')
         } catch (err) {
             console.log("LOGIN ERROR:", err);
         }
     };
 
     return (
-        <div className="min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
-            <div className="card bg-base-200/60 backdrop-blur-xl shadow-xl w-full max-w-sm sm:max-w-md p-6 sm:p-8 rounded-2xl border border-base-300/40">
+        <div className="h-full mt-10 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+            <div className="card  w-full max-w-sm sm:max-w-md p-6 sm:p-8 rounded-xl ">
                 <form onSubmit={handleSubmit} className="card-body p-0">
 
                     {/* Title */}
