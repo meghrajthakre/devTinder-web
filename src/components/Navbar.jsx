@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Sun, Moon } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../utils/constant";
+import { removeUser } from "../utils/userSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("dark");
   const [openDropdown, setOpenDropdown] = useState(false);
-  const dropdownRef = useRef(null); // Ref for the dropdown
-  const data = useSelector((state) => state.user);
+  const dropdownRef = useRef(null);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch()
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -32,8 +36,22 @@ const Navbar = () => {
     };
   }, []);
 
-  const avatar = data?.data?.photourl
-    ? data.data.photourl
+  const logOutUser = async () => {
+    try {
+      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
+
+      dispatch(removeUser());   // 🔥 Redux clear
+
+      window.location.href = "/login"; // redirect
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+  const avatar = user?.photourl
+    ? user.photourl
     : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
 
   return (
@@ -55,10 +73,10 @@ const Navbar = () => {
         </button>
 
         {/* USER INFO + AVATAR */}
-        {data && (
+        {user && (
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => setOpenDropdown(!openDropdown)}>
             <p className="font-semibold">
-              Welcome {`${data?.data?.firstName || ""} ${data?.data?.lastName || ""}`.trim() || "Guest User"}
+              Welcome {`${user?.firstName || ""} ${user?.lastName || ""}`.trim() || "Guest User"}
             </p>
             <img
               className="w-10 h-10 rounded-full ring-2 ring-primary/30"
@@ -69,16 +87,16 @@ const Navbar = () => {
         )}
 
         {/* DROPDOWN */}
-        {data && openDropdown && (
+        {user && openDropdown && (
           <div
-            ref={dropdownRef} // attach the ref here
+            ref={dropdownRef}
             className="absolute top-12 right-0 mt-2 w-48 bg-base-100 shadow-lg rounded-xl p-3 z-50"
           >
             <p className="font-semibold">
-              {`${data?.data?.firstName || ""} ${data?.data?.lastName || ""}`.trim() || "Guest User"}
+              {`${user?.firstName || ""} ${user?.lastName || ""}`.trim() || "Guest User"}
             </p>
             <p className="text-xs text-base-content/60 mb-2">
-              {data?.data?.email || "No Email"}
+              {user?.email || "No Email"}
             </p>
 
             <hr className="my-2" />
@@ -92,7 +110,8 @@ const Navbar = () => {
               </li>
               <li
                 className="hover:bg-base-200 p-2 rounded-lg cursor-pointer"
-                onClick={() => (window.location.href = "/login")} // refresh page on logout
+                href='/login'
+                onClick={logOutUser}
               >
                 Logout
               </li>
