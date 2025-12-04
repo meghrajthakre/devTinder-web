@@ -1,92 +1,126 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addUser, removeUser } from "../utils/userSlice";
+import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
+import { Mail, Lock, Apple, Chrome, X } from "lucide-react";
 
 const Login = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate()
-    const [email, setEmail] = useState('meghraj@123gmail.com');
-    const [password, setPassword] = useState('Meghraj@123');
-    const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true)
+  const [email, setEmail] = useState("meghraj@123gmail.com");
+  const [password, setPassword] = useState("Meghraj@123");
+  const [loading, setLoading] = useState(false);
 
-        try {
-            const res = await axios.post(
-                BASE_URL + "/login",
-                { email, password },
-                { withCredentials: true }
-            );
-            console.log("LOGIN SUCCESS:", res.data);
-            setEmail("")
-            setPassword("")
-            setLoading(false);
-            dispatch(addUser(res.data));
-            navigate('/feed')
-        } catch (err) {
-            console.log("LOGIN ERROR:", err);
-        }
-    };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-    return (
-        <div className="h-full mt-10 flex items-center justify-center px-4 sm:px-6 lg:px-8">
-            <div className="card  w-full max-w-sm sm:max-w-md p-6 sm:p-8 rounded-xl ">
-                <form onSubmit={handleSubmit} className="card-body p-0">
+    try {
+      const res = await axios.post(
+        BASE_URL + "/login",
+        { email, password },
+        { withCredentials: true }
+      );
+      dispatch(addUser(res.data));
+      navigate("/feed");
+    } catch (err) {
+      console.log("LOGIN ERROR:", err);
+    }
 
-                    {/* Title */}
-                    <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-center">
-                        Login
-                    </h2>
+    setLoading(false);
+  };
 
-                    {/* Email */}
-                    <div className="form-control w-full mb-5">
-                        <label className="label mb-1">
-                            <span className="label-text">Email</span>
-                        </label>
-                        <input
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            type="email"
-                            placeholder="mail@site.com"
-                            className="input input-bordered w-full rounded-lg bg-base-100 focus:ring-2 focus:ring-primary/60"
-                            required
-                        />
-                    </div>
+  return (
+    <div className="min-h-[calc(100vh-64px)] flex items-start justify-center pt-16 px-4 bg-base-200 transition-all">
 
-                    {/* Password */}
-                    <div className="form-control w-full mb-7">
-                        <label className="label mb-1">
-                            <span className="label-text">Password</span>
-                        </label>
-                        <input
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            type="password"
-                            placeholder="Password"
-                            className="input input-bordered w-full rounded-lg bg-base-100 focus:ring-2 focus:ring-primary/60"
-                            minLength="4"
-                            required
-                        />
-                    </div>
+      <div className="w-full max-w-sm bg-base-100 border border-base-300 shadow-xl rounded-2xl p-8 transition-all">
 
-                    {/* Button */}
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="btn btn-primary w-full rounded-lg text-lg h-12"
-                    >
-                        {loading ? "Logging in..." : "Login"}
-                    </button>
+        {/* Title */}
+        <h2 className="text-3xl font-semibold text-center mb-1 text-base-content">
+          Welcome Back
+        </h2>
 
-                </form>
+        <p className="text-center text-sm mb-8 text-base-content/60">
+          Don't have an account yet?{" "}
+          <span className="text-primary cursor-pointer">Sign up</span>
+        </p>
+
+        <form onSubmit={handleSubmit}>
+
+          {/* Email */}
+          <div className="form-control mb-4">
+            <label className="label">
+              <span className="label-text text-base-content">Email</span>
+            </label>
+            <div className="input input-bordered flex items-center gap-3 rounded-md">
+              <Mail size={18} className="text-base-content/50" />
+              <input
+                type="email"
+                className="bg-transparent w-full outline-none text-base-content"
+                placeholder="email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
             </div>
+          </div>
+
+          {/* Password */}
+          <div className="form-control mb-6">
+            <label className="label">
+              <span className="label-text text-base-content">Password</span>
+            </label>
+            <div className="input input-bordered flex items-center gap-3 rounded-md">
+              <Lock size={18} className="text-base-content/50" />
+              <input
+                type="password"
+                className="bg-transparent w-full outline-none text-base-content"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                minLength="4"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Login Btn */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn btn-primary w-full rounded-md h-12 text-lg"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+
+        </form>
+
+        {/* OR */}
+        <div className="flex items-center my-6">
+          <div className="flex-1 h-px bg-base-300"></div>
+          <span className="text-base-content/60 text-sm px-3">OR</span>
+          <div className="flex-1 h-px bg-base-300"></div>
         </div>
-    );
+
+        {/* Social Buttons */}
+        <div className="grid grid-cols-3 gap-3">
+          <button className="btn bg-base-200 border-base-300 rounded-xl hover:bg-base-300">
+            <Apple size={20} />
+          </button>
+          <button className="btn bg-base-200 border-base-300 rounded-xl hover:bg-base-300">
+            <Chrome size={20} />
+          </button>
+          <button className="btn bg-base-200 border-base-300 rounded-xl hover:bg-base-300">
+            <X size={20} />
+          </button>
+        </div>
+
+      </div>
+    </div>
+  );
 };
 
 export default Login;

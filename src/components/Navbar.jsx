@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Sun, Moon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../utils/constant";
 import { removeUser } from "../utils/userSlice";
@@ -57,9 +57,9 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-200/60 shadow-sm px-6 sticky top-0 z-50">
       {/* LEFT */}
-      <div className="flex items-center gap-3">
+      <Link to='/profile' className="flex items-center gap-3">
         <span className="text-xl font-semibold tracking-wide">DevTinder</span>
-      </div>
+      </Link>
 
       {/* RIGHT */}
       <div className="flex items-center gap-4 ml-auto relative">
@@ -67,7 +67,7 @@ const Navbar = () => {
         {/* THEME BUTTON */}
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-xl bg-base-300 hover:bg-base-100 transition-all duration-200 shadow-sm"
+          className="p-2 rounded-xl cursor-pointer bg-base-300 hover:bg-base-100 transition-all duration-200 shadow-sm"
         >
           {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
         </button>
@@ -75,8 +75,8 @@ const Navbar = () => {
         {/* USER INFO + AVATAR */}
         {user && (
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => setOpenDropdown(!openDropdown)}>
-            <p className="font-semibold">
-              Welcome {`${user?.firstName || ""} ${user?.lastName || ""}`.trim() || "Guest User"}
+           Welcome <p className="font-semibold">
+               {`${user?.firstName || ""}`.trim() || "Guest User"}
             </p>
             <img
               className="w-10 h-10 rounded-full ring-2 ring-primary/30"
