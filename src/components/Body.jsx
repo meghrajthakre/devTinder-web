@@ -12,6 +12,8 @@ const Body = () => {
   const dispatch = useDispatch();
   const location = useLocation()
   const user = useSelector(store => store.user)
+  const isLoginPage = location.pathname === "/login";
+  const shouldShowFooter = user && !isLoginPage;
 
   const fetchData = async () => {
     try {
@@ -37,7 +39,7 @@ const Body = () => {
     <div>
       <Navbar />
       <Outlet />
-      <Footer />
+      {shouldShowFooter && <Footer />}
     </div>
   )
 }
