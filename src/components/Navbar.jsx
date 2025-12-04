@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Sun, Moon } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [theme, setTheme] = useState("light");
   const [openDropdown, setOpenDropdown] = useState(false);
+  const dropdownRef = useRef(null); // Ref for the dropdown
   const data = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -16,6 +17,20 @@ const Navbar = () => {
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpenDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const avatar = data?.data?.photourl
     ? data.data.photourl
@@ -55,7 +70,10 @@ const Navbar = () => {
 
         {/* DROPDOWN */}
         {data && openDropdown && (
-          <div className="absolute top-12 right-0 mt-2 w-48 bg-base-100 shadow-lg rounded-xl p-3 z-50">
+          <div
+            ref={dropdownRef} // attach the ref here
+            className="absolute top-12 right-0 mt-2 w-48 bg-base-100 shadow-lg rounded-xl p-3 z-50"
+          >
             <p className="font-semibold">
               {`${data?.data?.firstName || ""} ${data?.data?.lastName || ""}`.trim() || "Guest User"}
             </p>
@@ -72,12 +90,12 @@ const Navbar = () => {
               >
                 Settings
               </li>
-              <a
-              href='/login'
+              <li
                 className="hover:bg-base-200 p-2 rounded-lg cursor-pointer"
+                onClick={() => (window.location.href = "/login")} // refresh page on logout
               >
                 Logout
-              </a>
+              </li>
             </ul>
           </div>
         )}
