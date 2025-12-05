@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../utils/constant";
 import { removeUser } from "../utils/userSlice";
+import { removeFeed } from "../utils/feedSlice";
 
 const Navbar = () => {
   const [theme, setTheme] = useState("dark");
@@ -39,7 +40,8 @@ const Navbar = () => {
     try {
       await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
 
-      dispatch(removeUser());   // 🔥 Redux clear
+      dispatch(removeUser()); 
+      dispatch(removeFeed())  // 🔥 Redux clear
       return navigate('/login')
     } catch (error) {
       console.log(error);
@@ -52,7 +54,7 @@ const Navbar = () => {
     : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
 
   return (
-    <div className="navbar bg-base-200/60 shadow-sm px-6 sticky top-0 z-50">
+    <div className="navbar bg-base-300 shadow-sm px-6 sticky top-0 z-50">
       {/* LEFT */}
       <Link to='/profile' className="flex items-center gap-3">
         <span className="text-xl font-semibold tracking-wide">DevTinder</span>
@@ -87,7 +89,7 @@ const Navbar = () => {
         {user && openDropdown && (
           <div
             ref={dropdownRef}
-            className="absolute top-12 right-0 mt-2 w-48 bg-base-100 shadow-lg rounded-xl p-3 z-50"
+            className="absolute top-12 right-0 mt-2 w-48 bg-base-300 shadow-lg rounded-xl p-3 z-50"
           >
             <p className="font-semibold">
               {`${user?.firstName || ""} ${user?.lastName || ""}`.trim() || "Guest User"}
