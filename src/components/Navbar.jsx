@@ -101,9 +101,9 @@ const Navbar = () => {
             <ul className="flex flex-col gap-2 text-sm">
               <li
                 className="hover:bg-base-200 p-2 rounded-lg cursor-pointer"
-                onClick={() => navigate("/settings")}
+                onClick={() => navigate("/profile")}
               >
-                Settings
+                Profile
               </li>
               <Link
                 className="hover:bg-base-200 p-2 rounded-lg cursor-pointer"
