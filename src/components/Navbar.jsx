@@ -7,13 +7,12 @@ import { BASE_URL } from "../utils/constant";
 import { removeUser } from "../utils/userSlice";
 
 const Navbar = () => {
-  const navigate = useNavigate();
   const [theme, setTheme] = useState("dark");
   const [openDropdown, setOpenDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
@@ -41,9 +40,7 @@ const Navbar = () => {
       await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
 
       dispatch(removeUser());   // 🔥 Redux clear
-
-      window.location.href = "/login"; // redirect
-
+      return navigate('/login')
     } catch (error) {
       console.log(error);
     }
@@ -75,8 +72,8 @@ const Navbar = () => {
         {/* USER INFO + AVATAR */}
         {user && (
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => setOpenDropdown(!openDropdown)}>
-           Welcome <p className="font-semibold">
-               {`${user?.firstName || ""}`.trim() || "Guest User"}
+            Welcome <p className="font-semibold">
+              {`${user?.firstName || ""}`.trim() || "Guest User"}
             </p>
             <img
               className="w-10 h-10 rounded-full ring-2 ring-primary/30"
@@ -108,13 +105,12 @@ const Navbar = () => {
               >
                 Settings
               </li>
-              <li
+              <Link
                 className="hover:bg-base-200 p-2 rounded-lg cursor-pointer"
-                href='/login'
                 onClick={logOutUser}
               >
                 Logout
-              </li>
+              </Link>
             </ul>
           </div>
         )}

@@ -13,6 +13,7 @@ const Login = () => {
   const [email, setEmail] = useState("meghraj@123gmail.com");
   const [password, setPassword] = useState("Meghraj@123");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +29,7 @@ const Login = () => {
       navigate("/feed");
     } catch (err) {
       console.log("LOGIN ERROR:", err);
+      setError(err.response?.data?.message || "Something went wrong");
     }
 
     setLoading(false);
@@ -86,6 +88,36 @@ const Login = () => {
               />
             </div>
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="flex items-center gap-3 bg-red-50 text-red-600 border border-red-300 rounded-md p-3 mb-4 animate-fadeIn">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-5 h-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v3m0 3h.01M12 3.75l8.25 14.25H3.75L12 3.75z"
+                />
+              </svg>
+
+              <span className="flex-1 text-sm">{error}</span>
+
+              <button
+                onClick={() => setError("")}
+                className="text-red-500 hover:text-red-700 transition"
+              >
+                ✕
+              </button>
+            </div>
+          )}
+
 
           {/* Login Btn */}
           <button
