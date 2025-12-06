@@ -1,3 +1,4 @@
+import { Heart, Star, X } from "lucide-react";
 import React from "react";
 
 const UserCards = ({ feed }) => {
@@ -53,19 +54,21 @@ const UserCards = ({ feed }) => {
           </div>
 
           {/* ACTION BUTTONS */}
+          {/* ACTION BUTTONS */}
           <div className="flex justify-between items-center mt-5 px-6">
             <button className="btn btn-circle btn-outline btn-error">
-              ✕
+              <X size={20} strokeWidth={2} />
             </button>
 
             <button className="btn btn-circle btn-primary shadow-lg">
-              ❤
+              <Heart size={22} fill="currentColor" />
             </button>
 
             <button className="btn btn-circle btn-outline btn-secondary">
-              ★
+              <Star size={20} strokeWidth={2} />
             </button>
           </div>
+
         </div>
       </div>
     </div>
