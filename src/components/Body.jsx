@@ -39,13 +39,19 @@ const Body = () => {
   }, [location.pathname]);
 
   return (
-    <>
+    <div className="">
       <Navbar />
+     
+      {shouldShowFooter &&  <Sidebar />}
+      <div className="flex justify-center bg-base-200 items-center px-6
+                md:pl-80
+                md:min-h-[calc(100vh-150px)]">
       <Outlet />
-      
+      </div>
       {shouldShowFooter && <BottomNav />}
-    </>
-  )
+    </div>
+  );
+
 };
 
 export default Body;

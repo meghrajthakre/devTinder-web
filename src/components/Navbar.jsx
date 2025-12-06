@@ -7,6 +7,8 @@ import { BASE_URL } from "../utils/constant";
 import { removeUser } from "../utils/userSlice";
 import { removeFeed } from "../utils/feedSlice";
 import Theme from "./theme/Theme";
+import { MapPin } from "lucide-react";
+
 
 const Navbar = () => {
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -44,26 +46,51 @@ const Navbar = () => {
     : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
 
   return (
-    <div className="navbar bg-base-100  px-4 sticky top-0 z-50">
+    <div className="navbar 
+    bg-base-300">
 
-    {/* LEFT — Logo (always left) */}
-<div className="flex items-center gap-2">
-  <img
-    src="src/assets/Logo/logo.png"
-    className="w-12 h-12"
-    alt="DevTinder Logo"
-  />
-</div>
+      {/* LEFT — Logo (always left) */}
+      <div className="flex items-center gap-6">
+        <img
+          src="src/assets/Logo/logo.png"
+          className="w-12 h-12"
+          alt="DevTinder Logo"
+        />
+      </div>
 
-{/* CENTER — DevTinder text (mobile only) */}
-<div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:ml-2">
-  <Link
-    to="/profile"
-    className="text-xl font-semibold tracking-wide"
-  >
-    DevTinder
-  </Link>
-</div>
+      {/* CENTER — DevTinder text (mobile only) */}
+      <div
+        className="
+    absolute left-1/2 -translate-x-1/2
+    md:static md:translate-x-0 md:ml-2
+    flex justify-center
+  "
+      >
+        <Link
+          to="/profile"
+          className="font-semibold tracking-wide"
+        >
+          <div
+            className="
+        flex flex-col items-center
+        md:flex-row md:items-center md:gap-2
+        leading-tight
+      "
+          >
+            {/* App Name */}
+            <span className="text-lg text-base-content">
+              Devtinder
+            </span>
+
+            {/* Location */}
+            <span className="flex items-center gap-1 text-xs md:text-sm text-primary">
+              <MapPin size={14} strokeWidth={2} />
+              India
+            </span>
+          </div>
+        </Link>
+      </div>
+
 
 
 

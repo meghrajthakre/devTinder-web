@@ -9,11 +9,14 @@ html, body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 /* bottom navar */
 @media (min-width: 768px) {
   .desktop-nav-center {
-    justify-content: center !important;
-    gap: 10rem;
+    left: 320px;                /* sidebar width (w-80) */
+    width: calc(100% - 320px);  /* remaining screen */
+    justify-content: center;    /* icons center */
+    gap: 4rem;                  /* icons paas-paas */
   }
 }

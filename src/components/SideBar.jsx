@@ -1,90 +1,69 @@
-import React, { useState } from "react";
-import { User, Users, MessageCircle, HeartHandshake, Settings, Menu } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Flame, Search } from "lucide-react";
+import React from "react";
+const users = [
+  { name: "Kevin", msg: "New Match! Say Hello 👋", active: true },
+  { name: "Jared", msg: "New Match! Say Hello 👋" },
+  { name: "David", msg: "You have the cutest smile..." },
+  { name: "Hank", msg: "What are you up to this weekend?" },
+  { name: "Romel", msg: "Flying to Italy tonight..." },
+];
 
-const Sidebar = () => {
-  const [open, setOpen] = useState(false);
-
-  // Navbar height = 64px
-  const NAVBAR_HEIGHT = 64;
-  const FOOTER_HEIGHT = 56; // adjust if your footer is different
-
+const SideBar = () => {
   return (
-    <>
-      {/* MOBILE TOGGLE BUTTON */}
-      <button
-        className="md:hidden btn btn-ghost absolute top-3 left-3 z-50"
-        onClick={() => setOpen(!open)}
-      >
-        <Menu size={22} />
-      </button>
-
-      {/* SIDEBAR */}
-      <div
-        className={`
-          fixed left-0 w-64 bg-base-300 border-r border-base-300 shadow-xl
-          transition-transform duration-300 z-40 flex flex-col
-          ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
-        `}
-        style={{
-          top: NAVBAR_HEIGHT,                             // BELOW NAVBAR
-          height: `calc(100vh - ${NAVBAR_HEIGHT + FOOTER_HEIGHT}px)` // ABOVE FOOTER
-        }}
-      >
-        {/* MENU ITEMS */}
-        <ul className="menu p-4 flex flex-col gap-4 text-base-content">
-          <li>
-            <Link to="/profile">
-              <User size={20} />
-              Profile
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/friends">
-              <Users size={20} />
-              Friends
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/chats">
-              <MessageCircle size={20} />
-              Chats
-            </Link>
-          </li>
-          <li>
-            <Link to="/feed">
-              <MessageCircle size={20} />
-              Feed
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/requests">
-              <HeartHandshake size={20} />
-              Requests
-            </Link>
-          </li>
-
-          <li>
-            <Link to="/settings">
-              <Settings size={20} />
-              Settings
-            </Link>
-          </li>
-        </ul>
+    <aside
+      className="
+        hidden md:flex flex-col
+        w-80 h-screen
+        bg-base-100
+        fixed left-0 top-0 mt-16
+        
+        z-40 bg-gradient-to-r from-base-300/80 via-base-200/60 to-base-300/80
+      "
+    >
+      {/* TOP BAR */}
+      <div className="flex items-center justify-between px-4 py-3 border-b">
+        <h2 className="font-semibold">My Profile</h2>
+        <Search size={18} className="opacity-60" />
       </div>
 
-      {/* MOBILE OVERLAY */}
-      {open && (
-        <div
-          className="fixed inset-0 bg-black/50 md:hidden z-30"
-          onClick={() => setOpen(false)}
-        ></div>
-      )}
-    </>
+      {/* DISCOVER */}
+      <div className="px-4 py-4 border-b">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-content">
+            <Flame size={18} />
+          </div>
+          <div>
+            <p className="font-medium">Discover New Matches</p>
+            <p className="text-xs opacity-60">
+              Start swiping to connect
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* MESSAGES */}
+      <div className="flex-1 overflow-y-auto">
+        {users.map((u, i) => (
+          <div
+            key={i}
+            className={`
+              flex items-center gap-3 px-4 py-3 cursor-pointer
+              hover:bg-base-300
+              ${u.active ? "bg-base-200" : ""}
+            `}
+          >
+            <div className="w-10 h-10 rounded-full bg-base-300" />
+            <div className="flex-1">
+              <p className="text-sm font-medium">{u.name}</p>
+              <p className="text-xs opacity-60 truncate">
+                {u.msg}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </aside>
   );
 };
 
-export default Sidebar;
+export default SideBar;

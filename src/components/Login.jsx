@@ -36,7 +36,7 @@ const Login = () => {
   };
 
   return (
-    <div className="relative bg-base-200 min-h-[calc(100vh-64px)] flex items-start justify-center pt-16 px-4">
+    <div className="relative min-h-[calc(100vh-64px)] flex items-start justify-center pt-16 px-4">
       <img src="" alt="" />
 
       {/* Login Card */}
@@ -49,7 +49,7 @@ const Login = () => {
 
         <p className="text-center text-sm mb-8 text-base-content/60">
           Don't have an account yet?{" "}
-          <span className="text-primary cursor-pointer">Sign up</span>
+          <span className="text-secondary font-bold cursor-pointer">Sign up</span>
         </p>
 
         <form onSubmit={handleSubmit}>

@@ -14,9 +14,10 @@ const App = () => {
           <Route>
             <Route path='/' element={<Body />}>
               <Route path='/feed' element={<Feed />} />
-              <Route path='/login' element={<Login />} />
               <Route path='/profile' element={<Profile />} />
             </Route>
+              <Route path='/login' element={<Login />} />
+
           </Route>z
         </Routes>
       </Provider>
