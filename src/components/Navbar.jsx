@@ -1,82 +1,84 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Sun, Moon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../utils/constant";
 import { removeUser } from "../utils/userSlice";
 import { removeFeed } from "../utils/feedSlice";
+import Theme from "./theme/Theme";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState("dark");
   const [openDropdown, setOpenDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const user = useSelector((state) => state.user);
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isLocationLogin = location.pathname === '/login';
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
-
-  // Close dropdown when clicking outside
+  // Close dropdown on outside click
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handler = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setOpenDropdown(false);
       }
     };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   const logOutUser = async () => {
     try {
       await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
-
-      dispatch(removeUser()); 
-      dispatch(removeFeed())  // 🔥 Redux clear
-      return navigate('/login')
+      dispatch(removeUser());
+      dispatch(removeFeed());
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }
   };
-
 
   const avatar = user?.photourl
     ? user.photourl
     : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
 
   return (
-    <div className="navbar bg-base-300 shadow-sm px-6 sticky top-0 z-50">
-      {/* LEFT */}
-      <Link to='/profile' className="flex items-center gap-3">
-        <span className="text-xl font-semibold tracking-wide">DevTinder</span>
-      </Link>
+    <div className="navbar bg-base-100  px-6 sticky top-0 z-50">
 
-      {/* RIGHT */}
+      {/* LEFT — DevTinder (left on desktop, centered on mobile) */}
+      <div className="flex-1 md:flex-none">
+        <Link
+          to="/profile"
+          className="flex items-center gap-2 text-xl font-semibold tracking-wide "
+        >
+          <img
+            src="src/assets/Logo/logo.png"
+            className="w-12 h-12 "
+            alt="DevTinder Logo"
+          />
+          DevTinder
+        </Link>
+      </div>
+
+
+      {/* RIGHT SIDE */}
       <div className="flex items-center gap-4 ml-auto relative">
 
-        {/* THEME BUTTON */}
-        <button
-          onClick={toggleTheme}
-          className="p-2 rounded-xl cursor-pointer bg-base-300 hover:bg-base-100 transition-all duration-200 shadow-sm"
-        >
-          {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
-        </button>
+        {/* THEME TOGGLE */}
+        {!isLocationLogin && <Theme />}
 
-        {/* USER INFO + AVATAR */}
+        {/* USER DETAILS */}
         {user && (
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setOpenDropdown(!openDropdown)}>
-            Welcome <p className="font-semibold">
-              {`${user?.firstName || ""}`.trim() || "Guest User"}
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => setOpenDropdown(!openDropdown)}
+          >
+            {/* Name hidden on mobile */}
+            <p className="font-semibold hidden md:block">
+              welcome {user?.firstName || "Guest"}
             </p>
+
             <img
               className="w-10 h-10 rounded-full ring-2 ring-primary/30"
               alt="User Avatar"
@@ -89,30 +91,29 @@ const Navbar = () => {
         {user && openDropdown && (
           <div
             ref={dropdownRef}
-            className="absolute top-12 right-0 mt-2 w-48 bg-base-300 shadow-lg rounded-xl p-3 z-50"
+            className="absolute bg-base-100 top-12 right-0 mt-2 w-48 shadow-lg rounded-xl p-3 z-50"
           >
             <p className="font-semibold">
-              {`${user?.firstName || ""} ${user?.lastName || ""}`.trim() || "Guest User"}
+              {user?.firstName} {user?.lastName}
             </p>
-            <p className="text-xs text-base-content/60 mb-2">
-              {user?.email || "No Email"}
-            </p>
+            <p className="text-xs text-base-content/60 mb-2">{user?.email}</p>
 
             <hr className="my-2" />
 
-            <ul className="flex flex-col gap-2 text-sm">
+            <ul className="flex flex-col gap-2 text-sm font-medium">
               <li
                 className="hover:bg-base-200 p-2 rounded-lg cursor-pointer"
                 onClick={() => navigate("/profile")}
               >
                 Profile
               </li>
-              <Link
+
+              <li
                 className="hover:bg-base-200 p-2 rounded-lg cursor-pointer"
                 onClick={logOutUser}
               >
                 Logout
-              </Link>
+              </li>
             </ul>
           </div>
         )}

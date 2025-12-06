@@ -4,6 +4,8 @@ import { BASE_URL } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import UserCard from "./UserCards";
+import BottomNav from "./BottomNav";
+import UserCards from "./UserCards";
 
 const Feed = () => {
   const dispatch = useDispatch();
@@ -11,7 +13,7 @@ const Feed = () => {
 
   const fetchFeed = async () => {
     const res = await axios.get(BASE_URL + "/feed", { withCredentials: true });
-    dispatch(addFeed(res.data)); 
+    dispatch(addFeed(res.data));
   };
 
   useEffect(() => {
@@ -19,9 +21,14 @@ const Feed = () => {
   }, []);
 
   return (
-    <div className="flex justify-center mt-10">
-      <UserCard feed={feed} />
-    </div>
+    <>
+
+      <div className="flex items-center justify-center">
+        <UserCards feed={feed} />
+      </div>
+
+      
+    </>
   );
 };
 

@@ -1,13 +1,19 @@
 @import "tailwindcss";
 
+/* DaisyUI */
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark, 
-dark;
+  themes: night --default, valentine;
 }
 
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* prevents horizontal scroll */
-  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+}
+/* bottom navar */
+@media (min-width: 768px) {
+  .desktop-nav-center {
+    justify-content: center !important;
+    gap: 10rem;
+  }
 }

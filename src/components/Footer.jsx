@@ -3,7 +3,7 @@ import { Mail, Twitter } from "lucide-react";
 
 const Footer = () => {
     return (
-        <footer className="footer sm:footer-horizontal bg-base-200 text-base-content items-center p-4 fixed bottom-0 left-0 w-full shadow-md">
+        <footer className="footer sm:footer-horizontal text-base-content items-center p-4 fixed bottom-0 left-0 w-full shadow-md">
             
             <aside className="grid-flow-col items-center">
                 <p>

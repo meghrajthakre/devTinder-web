@@ -13,7 +13,7 @@ const Login = () => {
   const [email, setEmail] = useState("meghraj@123gmail.com");
   const [password, setPassword] = useState("Meghraj@123");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,9 +36,11 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-64px)] flex items-start justify-center pt-16 px-4 bg-base-200 transition-all">
+    <div className="relative bg-base-200 min-h-[calc(100vh-64px)] flex items-start justify-center pt-16 px-4">
+      <img src="" alt="" />
 
-      <div className="w-full max-w-sm bg-base-100 border border-base-300 shadow-xl rounded-2xl p-8 transition-all">
+      {/* Login Card */}
+      <div className="w-full max-w-sm border border-base-300 shadow-xl rounded-2xl p-8 transition-all z-10">
 
         {/* Title */}
         <h2 className="text-3xl font-semibold text-center mb-1 text-base-content">
@@ -51,7 +53,6 @@ const Login = () => {
         </p>
 
         <form onSubmit={handleSubmit}>
-
           {/* Email */}
           <div className="form-control mb-4">
             <label className="label">
@@ -106,9 +107,7 @@ const Login = () => {
                   d="M12 9v3m0 3h.01M12 3.75l8.25 14.25H3.75L12 3.75z"
                 />
               </svg>
-
               <span className="flex-1 text-sm">{error}</span>
-
               <button
                 onClick={() => setError("")}
                 className="text-red-500 hover:text-red-700 transition"
@@ -118,7 +117,6 @@ const Login = () => {
             </div>
           )}
 
-
           {/* Login Btn */}
           <button
             type="submit"
@@ -127,7 +125,6 @@ const Login = () => {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
-
         </form>
 
         {/* OR */}
@@ -149,7 +146,6 @@ const Login = () => {
             <X size={20} />
           </button>
         </div>
-
       </div>
     </div>
   );
