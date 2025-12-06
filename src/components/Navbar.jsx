@@ -44,22 +44,27 @@ const Navbar = () => {
     : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
 
   return (
-    <div className="navbar bg-base-100  px-6 sticky top-0 z-50">
+    <div className="navbar bg-base-100  px-4 sticky top-0 z-50">
 
-      {/* LEFT — DevTinder (left on desktop, centered on mobile) */}
-      <div className="flex-1 md:flex-none">
-        <Link
-          to="/profile"
-          className="flex items-center gap-2 text-xl font-semibold tracking-wide "
-        >
-          <img
-            src="src/assets/Logo/logo.png"
-            className="w-12 h-12 "
-            alt="DevTinder Logo"
-          />
-          DevTinder
-        </Link>
-      </div>
+    {/* LEFT — Logo (always left) */}
+<div className="flex items-center gap-2">
+  <img
+    src="src/assets/Logo/logo.png"
+    className="w-12 h-12"
+    alt="DevTinder Logo"
+  />
+</div>
+
+{/* CENTER — DevTinder text (mobile only) */}
+<div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 md:ml-2">
+  <Link
+    to="/profile"
+    className="text-xl font-semibold tracking-wide"
+  >
+    DevTinder
+  </Link>
+</div>
+
 
 
       {/* RIGHT SIDE */}
@@ -80,7 +85,7 @@ const Navbar = () => {
             </p>
 
             <img
-              className="w-10 h-10 rounded-full ring-2 ring-primary/30"
+              className="hidden md:block w-10 h-10 rounded-full ring-2 ring-primary/30"
               alt="User Avatar"
               src={avatar}
             />
