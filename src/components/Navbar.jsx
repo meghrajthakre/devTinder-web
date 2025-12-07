@@ -48,7 +48,7 @@ const Navbar = () => {
   return (
     <div className="navbar 
     bg-base-100 border-b border-base-300">
-
+      
       {/* LEFT — Logo (always left) */}
       <div className="flex items-center gap-6">
         <img
