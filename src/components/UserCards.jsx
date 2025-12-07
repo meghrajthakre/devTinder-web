@@ -33,7 +33,9 @@ const UserCards = ({ feed }) => {
       bg-black/40 backdrop-blur-sm 
       px-2 py-1 rounded-full">
               <MapPin size={14} strokeWidth={2} />
-              India 34km away
+              <span className="text-primary/90 text-sm">
+                Indore, 4 km away
+              </span>
             </span>
           </div>
 

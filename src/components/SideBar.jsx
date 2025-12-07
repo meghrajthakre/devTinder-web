@@ -16,7 +16,7 @@ const SideBar = () => {
         w-80 h-screen
         bg-base-100
         fixed left-0 top-0 mt-16
-        
+        border-r border-2 border-base-300
         z-40 bg-gradient-to-r from-base-300/80 via-base-200/60 to-base-300/80
       "
     >

@@ -36,7 +36,7 @@ const Login = () => {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-64px)] flex items-start justify-center pt-16 px-4">
+    <div className="relative bg-base-100 min-h-[calc(100vh-64px)] flex items-start justify-center pt-16 px-4">
       <img src="" alt="" />
 
       {/* Login Card */}

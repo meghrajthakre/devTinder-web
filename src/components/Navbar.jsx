@@ -32,7 +32,7 @@ const Navbar = () => {
 
   const logOutUser = async () => {
     try {
-      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
+      await axios.post(BASE_URL + "/logout",{ withCredentials: true });
       dispatch(removeUser());
       dispatch(removeFeed());
       navigate("/login");
@@ -47,7 +47,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar 
-    bg-base-300">
+    bg-base-100 border-b border-base-300">
 
       {/* LEFT — Logo (always left) */}
       <div className="flex items-center gap-6">
@@ -78,12 +78,13 @@ const Navbar = () => {
       "
           >
             {/* App Name */}
-            <span className="text-lg text-base-content">
+            <span className="text-lg font-semibold text-primary">
               Devtinder
             </span>
 
+
             {/* Location */}
-            <span className="flex items-center gap-1 text-xs md:text-sm text-primary">
+            <span className="flex items-center gap-1 text-xs font-medium md:text-sm text-">
               <MapPin size={14} strokeWidth={2} />
               India
             </span>
@@ -107,7 +108,7 @@ const Navbar = () => {
             onClick={() => setOpenDropdown(!openDropdown)}
           >
             {/* Name hidden on mobile */}
-            <p className="font-semibold hidden md:block">
+            <p className=" hidden md:block">
               welcome {user?.firstName || "Guest"}
             </p>
 
@@ -132,7 +133,7 @@ const Navbar = () => {
 
             <hr className="my-2" />
 
-            <ul className="flex flex-col gap-2 text-sm font-medium">
+            <ul className="flex flex-col gap-2 ">
               <li
                 className="hover:bg-base-200 p-2 rounded-lg cursor-pointer"
                 onClick={() => navigate("/profile")}
