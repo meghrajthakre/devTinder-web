@@ -94,7 +94,7 @@ const Profile = () => {
 
                     {/* Edit Button */}
                     <button
-                        onClick={() => navigate('/edit')}
+                        onClick={() => navigate('/profileEdit')}
                         className="btn btn-primary btn-md sm:btn-lg md:btn-lg rounded-full mt-3 flex items-center justify-center gap-2 mx-auto">
                         <Edit3 size={16} />
 
