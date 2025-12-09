@@ -7,10 +7,12 @@ import Feed from './components/Feed';
 import { Provider } from 'react-redux';
 import appStore from './utils/appStore';
 import EditePage from './components/EditePage';
+import { Toaster } from 'react-hot-toast';
 const App = () => {
   return (
     <div>
       <Provider store={appStore}>
+        <Toaster position="top-center" reverseOrder={false} />
         <Routes>
           <Route>
             <Route path='/' element={<Body />}>

@@ -69,7 +69,7 @@ const Profile = () => {
 
                     {/* Bio */}
                     <p className="text-sm sm:text-base md:text-base text-base-content/70 line-clamp-3 mt-1">
-                        {user.bio || "Frontend dev who loves clean UI 💻❤️"}
+                        {user.about || "Frontend dev who loves clean UI 💻❤️"}
                     </p>
 
                     {/* Stats */}

@@ -5,6 +5,7 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constant";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const EditProfile = () => {
     const user = useSelector((store) => store.user);
@@ -19,8 +20,8 @@ const EditProfile = () => {
     const [age, setAge] = useState("");
     const [gender, setGender] = useState("male");
     const [about, setBio] = useState("");
-    const [skills, setSkills] = useState("");
-    const [photo, setPhoto] = useState("");
+    const [skills, setSkills] = useState([]);
+    const [photo, setPhoto] = useState(null);
     const [photos, setPhotos] = useState([]);
     const [mobile, setMobile] = useState("");
     const [profession, setProfession] = useState("");
@@ -34,7 +35,7 @@ const EditProfile = () => {
         setAge(user.age || "");
         setGender(user.gender || "male");
         setBio(user.about || "");
-        setSkills(user.skills?.join(", ") || "");
+        setSkills(user.skills || []);
         setPhoto(user.photourl || "");
         setPhotos(user.photos || []);
         setMobile(user.mobile || "");
@@ -85,9 +86,11 @@ const EditProfile = () => {
             dispatch(addUser(res.data.user));
 
             setLoading(false)
-            // navigate('/profile')
+            toast.success("Profile updated successfully");
+            navigate('/profile')
         } catch (err) {
             console.error(err);
+            toast.error("Failed to update profile");
         }
     };
 
