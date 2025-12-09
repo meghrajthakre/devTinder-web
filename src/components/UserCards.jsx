@@ -7,7 +7,7 @@ const UserCards = ({ feed }) => {
   }
 
   // ✅ safer than hardcoding [7]
-  const user = feed[Math.min(7, feed.length - 1)];
+  const user = feed[7];
 
   const avatar =
     user.photourl ||
@@ -15,7 +15,7 @@ const UserCards = ({ feed }) => {
 
   return (
     <div className="flex    
-              hover:scale-[1.01]  transition-transform duration-700 justify-center items-center px-4 mt-8">
+              hover:scale-[1.01]  transition-transform duration-700 justify-center items-center px-8 mt-8">
       <div
         className="
           relative w-full max-w-sm
