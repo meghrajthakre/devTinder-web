@@ -5,7 +5,7 @@ const Back = () => {
     const navigate = useNavigate(); // hook for back navigation
 
     return (
-        <div className=" px-4">
+        <div className=" px-4 py-4">
             <button
                 type="button"
                 onClick={() => navigate(-1)}
