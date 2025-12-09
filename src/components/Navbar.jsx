@@ -94,7 +94,10 @@ const Navbar = () => {
             </p>
 
             <img
-              className="w-9 h-9 rounded-full ring-2 ring-primary/30"
+              className="w-9 h-9   
+              transition-all duration-300 ease-in-out
+              hover:scale-105
+              hover:ring-2 hover:ring-primary rounded-full ring-2 ring-primary/30"
               src={avatar}
               alt="avatar"
             />

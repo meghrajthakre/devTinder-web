@@ -17,37 +17,61 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!email || !password) {
+      setError("Email and password are required");
+      return;
+    }
+
     setLoading(true);
+    setError("");
 
     try {
       const res = await axios.post(
-        BASE_URL + "/login",
+        `${BASE_URL}/login`,
         { email, password },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          timeout: 8000,
+        }
       );
+
       dispatch(addUser(res.data));
       navigate("/feed");
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid credentials");
+      if (err.code === "ECONNABORTED") {
+        setError("Server is taking too long. Try again.");
+      } else if (!err.response) {
+        setError("Network error. Please check your internet.");
+      } else if (err.response.status === 401) {
+        setError("Invalid email or password");
+      } else if (err.response.status >= 500) {
+        setError("Server error. Please try later.");
+      } else {
+        setError(err.response?.data?.message || "Something went wrong");
+      }
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
-    <div className="
-      min-h-screen flex items-center justify-center px-4
-      bg-gradient-to-br from-base-200 via-base-300 to-base-200
-    ">
-      {/* Card */}
-      <div className="
-        w-full max-w-sm rounded-3xl 
-        bg-base-100 shadow-2xl 
-        p-8
-      ">
+    <div
+      className="
+        min-h-screen flex items-center justify-center px-4
+        bg-gradient-to-br from-base-200 via-base-300 to-base-200
+      "
+    >
+      <div
+        className="
+          w-full max-w-sm rounded-3xl 
+          bg-base-100 shadow-2xl 
+          p-8
+        "
+      >
         {/* Brand */}
         <h2
-          className="text-2xl font-semibold text-center"
+          className="text-2xl font-semibold text-center text-primary"
           style={{ fontFamily: "var(--font-brand)" }}
         >
           devTinder
@@ -63,17 +87,18 @@ const Login = () => {
             <label className="label">
               <span className="label-text text-sm">Email</span>
             </label>
-            <div className="
-              input input-bordered flex items-center gap-3 
-              rounded-xl
-            ">
+            <div className="input input-bordered rounded-xl flex items-center gap-3">
               <Mail size={18} className="text-base-content/50" />
               <input
                 type="email"
+                disabled={loading}
                 className="bg-transparent w-full outline-none"
                 placeholder="you@devmail.com"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (error) setError("");
+                }}
                 required
               />
             </div>
@@ -84,17 +109,18 @@ const Login = () => {
             <label className="label">
               <span className="label-text text-sm">Password</span>
             </label>
-            <div className="
-              input input-bordered flex items-center gap-3 
-              rounded-xl
-            ">
+            <div className="input input-bordered rounded-xl flex items-center gap-3">
               <Lock size={18} className="text-base-content/50" />
               <input
                 type="password"
+                disabled={loading}
                 className="bg-transparent w-full outline-none"
                 placeholder="••••••••"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  if (error) setError("");
+                }}
                 required
               />
             </div>
@@ -102,30 +128,23 @@ const Login = () => {
 
           {/* Error */}
           {error && (
-            <div className="
-              flex items-center gap-2 
-              bg-error/10 text-error 
-              border border-error/30 
-              rounded-xl p-3 text-sm
-            ">
+            <div className="alert alert-error flex justify-between items-center rounded-xl text-sm shadow-sm">
               <span>{error}</span>
               <button
+                type="button"
                 onClick={() => setError("")}
-                className="ml-auto"
+                className="btn btn-ghost btn-xs"
               >
                 ✕
               </button>
             </div>
           )}
 
-          {/* Login Button */}
+          {/* Submit */}
           <button
             type="submit"
             disabled={loading}
-            className="
-              btn btn-primary w-full h-12 
-              rounded-xl text-base
-            "
+            className="btn btn-primary w-full h-12 rounded-xl text-base"
           >
             {loading ? "Signing you in..." : "Continue"}
           </button>
@@ -145,6 +164,7 @@ const Login = () => {
           {[Apple, Chrome, X].map((Icon, i) => (
             <button
               key={i}
+              disabled={loading}
               className="
                 btn rounded-xl 
                 bg-base-200 border-base-300
@@ -172,6 +192,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
