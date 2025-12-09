@@ -2,21 +2,42 @@
 
 /* DaisyUI */
 @plugin "daisyui" {
-  themes: night --default, valentine;
+  themes: luxury --default, valentine;
 }
 
-html, body {
-  margin: 0;
+*{
+ font-family: 'Poppins', sans-serif;
+
+}
+:root {
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-brand: 'Poppins', sans-serif;
+}
+
+body {
+  font-family: var(--font-ui);
+}
+
+
+html,
+body {
+  margin: 0;  
   padding: 0;
   min-height: 100vh;
   overflow-x: hidden;
 }
+
+
 /* bottom navar */
 @media (min-width: 768px) {
   .desktop-nav-center {
-    left: 320px;                /* sidebar width (w-80) */
-    width: calc(100% - 320px);  /* remaining screen */
-    justify-content: center;    /* icons center */
-    gap: 4rem;                  /* icons paas-paas */
+    left: 320px;
+    /* sidebar width (w-80) */
+    width: calc(100% - 320px);
+    /* remaining screen */
+    justify-content: center;
+    /* icons center */
+    gap: 4rem;
+    /* icons paas-paas */
   }
 }

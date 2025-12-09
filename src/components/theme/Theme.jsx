@@ -16,18 +16,18 @@ const Theme = () => {
     }, [theme]);
 
     const toggleTheme = () => {
-        setTheme((prev) => (prev === "night" ? "valentine" : "night"));
+        setTheme((prev) => (prev === "luxury" ? "valentine" : "luxury"));
     };
 
     return (
         <button
             onClick={toggleTheme}
-            className="cursor-pointer p-2 rounded-xl bg-base-100 hover:bg-base-200 transition-all duration-200 shadow-sm active:scale-105"
+            className="cursor-pointer p-2 rounded-xl bg-base-300 border border-2 border-base-100 hover:bg-base-200 transition-all duration-200 shadow-sm active:scale-105"
         >
-            {theme === "night" ? (
-                <Sun size={18} className="transition-transform active:rotate-45" />
+            {theme === "luxury" ? (
+                <Sun size={18} className="transition-transform text-primary active:rotate-45" />
             ) : (
-                <Moon size={18} className="transition-transform active:rotate-45" />
+                <Moon size={18} className="transition-transform text-primary active:rotate-45" />
             )}
         </button>
     );

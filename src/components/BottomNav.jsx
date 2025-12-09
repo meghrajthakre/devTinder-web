@@ -9,26 +9,33 @@ import {
 import React from "react";
 
 const BottomNav = () => {
-  const iconProps = (isActive) => ({
-    size: 26,
-    strokeWidth: isActive ? 2.2 : 1.7,
-    className: isActive
-      ? "text-primary"
-      : "text-base-content/40",
-  });
 
   const itemClass = ({ isActive }) =>
-    `flex flex-col items-center gap-1 transition-all duration-200
-     ${isActive ? "scale-110" : "scale-100"}`;
+    `flex flex-col items-center justify-center gap-1
+     px-3 py-2 rounded-2xl
+     transition-all duration-200
+     ${isActive
+        ? " text-primary scale-110"
+        : "text-base-content/60 hover:bg-base-200"}`
+  
+  const iconProps = (isActive) => ({
+    size: 22,
+    strokeWidth: isActive ? 2.2 : 1.8,
+    className: isActive ? "text-primary" : "text-base-content/60",
+  });
 
   const labelClass = (isActive) =>
-    `text-xs font-medium transition-colors
-     ${isActive ? "text-primary" : "text-base-content/40"}`;
+    `text-[11px]
+     ${isActive ? "font-semibold text-primary" : "font-medium text-base-content/60"}`;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-16 
-      bg-base-100 border-t border-base-300
-      flex justify-around items-center z-50">
+    <div className="
+      fixed bottom-0 left-0 right-0 h-16
+      bg-base-100/80 backdrop-blur
+      border-t border-base-300
+      flex justify-around items-center
+      z-50
+    ">
 
       <NavLink to="/feed" className={itemClass}>
         {({ isActive }) => (
@@ -48,10 +55,14 @@ const BottomNav = () => {
         )}
       </NavLink>
 
+      {/* CENTER EMPHASIS */}
       <NavLink to="/matches" className={itemClass}>
         {({ isActive }) => (
           <>
-            <HeartHandshake {...iconProps(isActive)} />
+            <HeartHandshake
+              {...iconProps(isActive)}
+             
+            />
             <span className={labelClass(isActive)}>Matches</span>
           </>
         )}

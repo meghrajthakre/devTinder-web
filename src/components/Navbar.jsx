@@ -32,7 +32,7 @@ const Navbar = () => {
 
   const logOutUser = async () => {
     try {
-      await axios.post(BASE_URL + "/logout",{ withCredentials: true });
+      await axios.post(BASE_URL + "/logout", { withCredentials: true });
       dispatch(removeUser());
       dispatch(removeFeed());
       navigate("/login");
@@ -46,103 +46,84 @@ const Navbar = () => {
     : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
 
   return (
-    <div className="navbar 
-    bg-base-100 border-b border-base-300">
-      
-      {/* LEFT — Logo (always left) */}
-      <div className="flex items-center gap-6">
+    <div className="navbar bg-base-100 border-b border-base-300 px-4">
+
+      {/* LEFT */}
+      <div className="flex items-center gap-3">
         <img
           src="src/assets/Logo/logo.png"
-          className="w-12 h-12"
+          className="w-10 h-10"
           alt="DevTinder Logo"
         />
       </div>
 
-      {/* CENTER — DevTinder text (mobile only) */}
-      <div
-        className="
-    absolute left-1/2 -translate-x-1/2
-    md:static md:translate-x-0 md:ml-2
-    flex justify-center
-  "
-      >
-        <Link
-          to="/profile"
-          className="font-semibold tracking-wide"
-        >
-          <div
-            className="
-        flex flex-col items-center
-        md:flex-row md:items-center md:gap-2
-        leading-tight
-      "
-          >
-            {/* App Name */}
-            <span className="text-lg font-semibold text-primary">
-              Devtinder
+      {/* CENTER */}
+      <div className="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
+        <Link to="/profile">
+          <div className="flex flex-col items-center md:flex-row md:gap-2 leading-tight">
+
+            {/* Brand */}
+            <span
+              className="text-[18px] font-semibold text-primary tracking-wide"
+              style={{ fontFamily: "var(--font-brand)" }}
+            >
+              DevTinder
             </span>
 
-
             {/* Location */}
-            <span className="flex items-center gap-1 text-xs font-medium md:text-sm text-">
-              <MapPin size={14} strokeWidth={2} />
+            <span className="flex items-center gap-1 text-xs md:text-sm text-base-content/60">
+              <MapPin size={14} />
               India
             </span>
           </div>
         </Link>
       </div>
 
+      {/* RIGHT */}
+      <div className="ml-auto flex items-center gap-3 relative">
 
-
-
-      {/* RIGHT SIDE */}
-      <div className="flex items-center gap-4 ml-auto relative">
-
-        {/* THEME TOGGLE */}
         {!isLocationLogin && <Theme />}
 
-        {/* USER DETAILS */}
         {user && (
           <div
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => setOpenDropdown(!openDropdown)}
           >
-            {/* Name hidden on mobile */}
-            <p className=" hidden md:block">
-              welcome {user?.firstName || "Guest"}
+            <p className="hidden md:block text-sm text-base-content/70">
+              Hi, {user?.firstName || "Guest"}
             </p>
 
             <img
-              className="hidden md:block w-10 h-10 rounded-full ring-2 ring-primary/30"
-              alt="User Avatar"
+              className="w-9 h-9 rounded-full ring-2 ring-primary/30"
               src={avatar}
+              alt="avatar"
             />
           </div>
         )}
 
-        {/* DROPDOWN */}
         {user && openDropdown && (
           <div
             ref={dropdownRef}
-            className="absolute bg-base-100 top-12 right-0 mt-2 w-48 shadow-lg rounded-xl p-3 z-50"
+            className="absolute top-12 right-0 w-52 bg-base-100 rounded-xl shadow-lg p-3 z-50"
           >
-            <p className="font-semibold">
+            <p className="font-medium">
               {user?.firstName} {user?.lastName}
             </p>
-            <p className="text-xs text-base-content/60 mb-2">{user?.email}</p>
+            <p className="text-xs text-base-content/60 mb-2">
+              {user?.email}
+            </p>
 
             <hr className="my-2" />
 
-            <ul className="flex flex-col gap-2 ">
+            <ul className="space-y-1">
               <li
-                className="hover:bg-base-200 p-2 rounded-lg cursor-pointer"
+                className="px-3 py-2 rounded-lg hover:bg-base-200 cursor-pointer"
                 onClick={() => navigate("/profile")}
               >
                 Profile
               </li>
-
               <li
-                className="hover:bg-base-200 p-2 rounded-lg cursor-pointer"
+                className="px-3 py-2 rounded-lg hover:bg-base-200 cursor-pointer text-error"
                 onClick={logOutUser}
               >
                 Logout
@@ -152,6 +133,7 @@ const Navbar = () => {
         )}
       </div>
     </div>
+
   );
 };
 

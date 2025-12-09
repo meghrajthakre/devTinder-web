@@ -28,42 +28,50 @@ const Login = () => {
       dispatch(addUser(res.data));
       navigate("/feed");
     } catch (err) {
-      console.log("LOGIN ERROR:", err);
-      setError(err.response?.data?.message || "Something went wrong");
+      setError(err.response?.data?.message || "Invalid credentials");
     }
 
     setLoading(false);
   };
 
   return (
-    <div className="relative bg-base-100 min-h-[calc(100vh-64px)] flex items-start justify-center pt-16 px-4">
-      <img src="" alt="" />
-
-      {/* Login Card */}
-      <div className="w-full max-w-sm border border-base-300 shadow-xl rounded-2xl p-8 transition-all z-10">
-
-        {/* Title */}
-        <h2 className="text-3xl font-semibold text-center mb-1 text-base-content">
-          Welcome Back
+    <div className="
+      min-h-screen flex items-center justify-center px-4
+      bg-gradient-to-br from-base-200 via-base-300 to-base-200
+    ">
+      {/* Card */}
+      <div className="
+        w-full max-w-sm rounded-3xl 
+        bg-base-100 shadow-2xl 
+        p-8
+      ">
+        {/* Brand */}
+        <h2
+          className="text-2xl font-semibold text-center"
+          style={{ fontFamily: "var(--font-brand)" }}
+        >
+          devTinder
         </h2>
 
-        <p className="text-center text-sm mb-8 text-base-content/60">
-          Don't have an account yet?{" "}
-          <span className="text-secondary font-bold cursor-pointer">Sign up</span>
+        <p className="text-center text-sm text-base-content/60 mt-1 mb-8">
+          Sign in to continue matching with devs 💖
         </p>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email */}
-          <div className="form-control mb-4">
+          <div className="form-control">
             <label className="label">
-              <span className="label-text text-base-content">Email</span>
+              <span className="label-text text-sm">Email</span>
             </label>
-            <div className="input input-bordered flex items-center gap-3 rounded-md">
+            <div className="
+              input input-bordered flex items-center gap-3 
+              rounded-xl
+            ">
               <Mail size={18} className="text-base-content/50" />
               <input
                 type="email"
-                className="bg-transparent w-full outline-none text-base-content"
-                placeholder="email address"
+                className="bg-transparent w-full outline-none"
+                placeholder="you@devmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -72,83 +80,98 @@ const Login = () => {
           </div>
 
           {/* Password */}
-          <div className="form-control mb-6">
+          <div className="form-control">
             <label className="label">
-              <span className="label-text text-base-content">Password</span>
+              <span className="label-text text-sm">Password</span>
             </label>
-            <div className="input input-bordered flex items-center gap-3 rounded-md">
+            <div className="
+              input input-bordered flex items-center gap-3 
+              rounded-xl
+            ">
               <Lock size={18} className="text-base-content/50" />
               <input
                 type="password"
-                className="bg-transparent w-full outline-none text-base-content"
-                placeholder="Password"
+                className="bg-transparent w-full outline-none"
+                placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                minLength="4"
                 required
               />
             </div>
           </div>
 
-          {/* Error Message */}
+          {/* Error */}
           {error && (
-            <div className="flex items-center gap-3 bg-red-50 text-red-600 border border-red-300 rounded-md p-3 mb-4 animate-fadeIn">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-5 h-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 9v3m0 3h.01M12 3.75l8.25 14.25H3.75L12 3.75z"
-                />
-              </svg>
-              <span className="flex-1 text-sm">{error}</span>
+            <div className="
+              flex items-center gap-2 
+              bg-error/10 text-error 
+              border border-error/30 
+              rounded-xl p-3 text-sm
+            ">
+              <span>{error}</span>
               <button
                 onClick={() => setError("")}
-                className="text-red-500 hover:text-red-700 transition"
+                className="ml-auto"
               >
                 ✕
               </button>
             </div>
           )}
 
-          {/* Login Btn */}
+          {/* Login Button */}
           <button
             type="submit"
             disabled={loading}
-            className="btn btn-primary w-full rounded-md h-12 text-lg"
+            className="
+              btn btn-primary w-full h-12 
+              rounded-xl text-base
+            "
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Signing you in..." : "Continue"}
           </button>
         </form>
 
-        {/* OR */}
+        {/* Divider */}
         <div className="flex items-center my-6">
-          <div className="flex-1 h-px bg-base-300"></div>
-          <span className="text-base-content/60 text-sm px-3">OR</span>
-          <div className="flex-1 h-px bg-base-300"></div>
+          <div className="flex-1 h-px bg-base-300" />
+          <span className="text-xs px-3 text-base-content/60">
+            or continue with
+          </span>
+          <div className="flex-1 h-px bg-base-300" />
         </div>
 
-        {/* Social Buttons */}
+        {/* Social */}
         <div className="grid grid-cols-3 gap-3">
-          <button className="btn bg-base-200 border-base-300 rounded-xl hover:bg-base-300">
-            <Apple size={20} />
-          </button>
-          <button className="btn bg-base-200 border-base-300 rounded-xl hover:bg-base-300">
-            <Chrome size={20} />
-          </button>
-          <button className="btn bg-base-200 border-base-300 rounded-xl hover:bg-base-300">
-            <X size={20} />
-          </button>
+          {[Apple, Chrome, X].map((Icon, i) => (
+            <button
+              key={i}
+              className="
+                btn rounded-xl 
+                bg-base-200 border-base-300
+                hover:bg-base-300
+              "
+            >
+              <Icon size={20} />
+            </button>
+          ))}
         </div>
+
+        {/* Signup */}
+        <p className="text-center text-sm mt-6 text-base-content/60">
+          New here?{" "}
+          <span
+            onClick={() => navigate("/signup")}
+            className="text-secondary font-semibold cursor-pointer"
+          >
+            Create account
+          </span>
+        </p>
       </div>
     </div>
   );
 };
 
 export default Login;
+
+
+
