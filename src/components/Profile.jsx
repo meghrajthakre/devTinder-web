@@ -57,7 +57,7 @@ const Profile = () => {
 
                     {/* Skills */}
                     <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mt-1">
-                        {user.skills?.slice(0, 6).map((skill, i) => (
+                        {user.skills?.slice(0, 7).map((skill, i) => (
                             <span
                                 key={skill + i}
                                 className="text-xs sm:text-sm md:text-base px-3 py-1 rounded-full text-white bg-secondary"
