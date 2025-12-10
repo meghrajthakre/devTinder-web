@@ -1,12 +1,14 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { addRequests } from "../utils/requestsSlice";
+import toast from "react-hot-toast";
 
 const RequestsPage = () => {
   const dispatch = useDispatch();
   const requests = useSelector((store) => store.requests);
+  const [loading, setLoading] = useState(false)
 
   const handleRequests = async () => {
     try {
@@ -21,20 +23,25 @@ const RequestsPage = () => {
   };
 
   const handleAction = async (requestId, status) => {
+    setLoading(true)
     try {
-      await axios.post(
-        BASE_URL + "/user/request/respond",
-        { requestId, status },
+      await axios.patch(
+        `${BASE_URL}/request/review/${status}/${requestId}`,
+        {},
         { withCredentials: true }
       );
 
-      dispatch(
-        addRequests(requests.filter((r) => r._id !== requestId))
-      );
+      dispatch(addRequests(requests.filter((r) => r._id !== requestId)));
+      toast.success(`Request ${status}`);
+
     } catch (error) {
       console.error(error);
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
     }
   };
+
 
   useEffect(() => {
     handleRequests();
@@ -102,6 +109,7 @@ const RequestsPage = () => {
               {/* Actions */}
               <div className="flex gap-3">
                 <button
+                  disabled={loading}
                   onClick={() =>
                     handleAction(req._id, "accepted")
                   }
@@ -110,6 +118,7 @@ const RequestsPage = () => {
                   Accept
                 </button>
                 <button
+                  disabled={loading}
                   onClick={() =>
                     handleAction(req._id, "rejected")
                   }
