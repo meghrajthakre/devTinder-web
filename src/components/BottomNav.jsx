@@ -46,11 +46,11 @@ const BottomNav = () => {
         )}
       </NavLink>
 
-      <NavLink to="/connections" className={itemClass}>
+      <NavLink to="/Requests" className={itemClass}>
         {({ isActive }) => (
           <>
             <Users {...iconProps(isActive)} />
-            <span className={labelClass(isActive)}>Connections</span>
+            <span className={labelClass(isActive)}>Requests</span>
           </>
         )}
       </NavLink>

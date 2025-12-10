@@ -13,8 +13,8 @@ const Profile = () => {
 
     return (
         <div
-            className="px-2 py-4 mt-15 pb-20 md:mt-0 md:pb-3
-  flex flex-col justify-center w-full bg-base-100  min-h-screen overflow-hidden
+            className="px-4 py-4 mt-15 pb-20 md:mt-0 md:pb-3 
+  flex flex-col justify-center w-full   min-h-screen overflow-hidden
   "
         >
 

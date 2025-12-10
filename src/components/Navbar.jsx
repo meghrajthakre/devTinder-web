@@ -126,6 +126,12 @@ const Navbar = () => {
                 Profile
               </li>
               <li
+                className="px-3 py-2 rounded-lg hover:bg-base-200 cursor-pointer"
+                onClick={() => navigate("/Connections")}
+              >
+                Connections
+              </li>
+              <li
                 className="px-3 py-2 rounded-lg hover:bg-base-200 cursor-pointer text-error"
                 onClick={logOutUser}
               >
