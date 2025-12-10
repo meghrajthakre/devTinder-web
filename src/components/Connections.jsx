@@ -26,9 +26,12 @@ const Connections = () => {
 
   if (connections.length === 0) {
     return (
-      <p className="text-center text-primary mt-[70px]">
-        You don’t have any connections yet
-      </p>
+       <div className="mt-[100px] text-center px-4">
+        <h2 className="text-xl font-semibold">No connections</h2>
+        <p className="text-gray-400 mt-1">
+          You don’t have any connection  yet
+        </p>
+      </div>
     );
   }
 
@@ -43,7 +46,7 @@ const Connections = () => {
             _id,
             firstName,
             lastName,
-            photoUrl,
+            photourl,
             about,
             location,
             headline,
@@ -59,7 +62,7 @@ const Connections = () => {
                 <div className="avatar mx-auto mb-3">
                   <div className="w-20 rounded-full ring ring-primary/30 ring-offset-base-100 ring-offset-2">
                     <img
-                      src={photoUrl || `https://i.pravatar.cc/150?u=${_id}`}
+                      src={photourl || `https://i.pravatar.cc/150?u=${_id}`}
                       alt={firstName}
                     />
                   </div>

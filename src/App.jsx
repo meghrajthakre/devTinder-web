@@ -9,6 +9,7 @@ import appStore from './utils/appStore';
 import EditePage from './components/EditePage';
 import { Toaster } from 'react-hot-toast';
 import Connections from './components/Connections';
+import RequestsPage from './components/RequestsPage';
 const App = () => {
   return (
     <div>
@@ -20,7 +21,8 @@ const App = () => {
               <Route path='/feed' element={<Feed />} />
               <Route path='/profile' element={<Profile />} />
               <Route path='/profileEdit' element={<EditePage />} />
-              <Route path='/Connections' element={<Connections />} />
+              <Route path='/connections' element={<Connections />} />
+              <Route path='/requests' element={<RequestsPage />} />
               
             </Route>
               <Route path='/login' element={<Login />} />
