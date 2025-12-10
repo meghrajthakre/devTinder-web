@@ -46,7 +46,7 @@ const Navbar = () => {
     : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
 
   return (
-    <div className="navbar bg-base-100 border-b border-base-300 px-4">
+    <div className="navbar bg-base-100 border-b border-base-300 px-4 fixed top-0 z-500">
 
       {/* LEFT */}
       <div className="flex items-center gap-3">

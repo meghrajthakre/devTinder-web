@@ -14,8 +14,8 @@ const UserCards = ({ feed }) => {
     "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp";
 
   return (
-    <div className="flex    
-              hover:scale-[1.01]  transition-transform duration-700 justify-center items-center px-8 mt-8">
+    <div className="flex   items-center justify-center min-h-screen px-8
+              transition-transform duration-700  ">
       <div
         className="
           relative w-full max-w-sm

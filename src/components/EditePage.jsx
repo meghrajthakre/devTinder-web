@@ -101,7 +101,7 @@ const EditProfile = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center w-full bg-base-100 pb-20 min-h-[calc(100vh-120px)]">
+    <div className="flex flex-col justify-center w-full bg-base-100 pb-20 min-h-screen pt-[70px]">
       <Back />
 
       <form
