@@ -10,6 +10,7 @@ import EditePage from './components/EditePage';
 import { Toaster } from 'react-hot-toast';
 import Connections from './components/Connections';
 import RequestsPage from './components/RequestsPage';
+import SignUpPage from './components/SignUpPage';
 const App = () => {
   return (
     <div>
@@ -26,6 +27,7 @@ const App = () => {
               
             </Route>
               <Route path='/login' element={<Login />} />
+              <Route path='/signup' element={<SignUpPage />} />
 
           </Route>z
         </Routes>

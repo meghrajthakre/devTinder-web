@@ -181,7 +181,7 @@ const Login = () => {
           New here?{" "}
           <span
             onClick={() => navigate("/signup")}
-            className="text-secondary font-semibold cursor-pointer"
+            className="text-secondary hover:text-primary font-semibold cursor-pointer"
           >
             Create account
           </span>
