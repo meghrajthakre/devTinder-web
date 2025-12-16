@@ -20,6 +20,7 @@ const SignUpPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         setLoading(true);
         setError("");
 
@@ -29,26 +30,30 @@ const SignUpPage = () => {
                 { firstName, lastName, email, password },
                 { withCredentials: true, timeout: 8000 }
             );
-
-            if (res.data?.success) {
-                dispatch(addUser(res.data.user));
-                navigate("/profile");
-            } else {
-                setError(res.data?.message || "Something went wrong");
-            }
+            console.log(redata)
+            dispatch(addUser(res.data));
+            navigate("/profile");
         } catch (err) {
-            if (!err.response) {
-                setError("Network error. Please check your connection.");
-            } else {
-                setError(err.response?.data?.message || "Something went wrong");
-            }
+            // if (err.code === "ECONNABORTED") {
+            //     setError("Server is taking too long. Try again.");
+            // } else if (!err.response) {
+            //     setError("Network error. Please check your internet.");
+            // } else if (err.response.status === 400) {
+            //     setError(err.response?.data?.message || "Invalid input");
+            // } else if (err.response.status >= 500) {
+            //     setError("Server error. Please try later.");
+            // } else {
+            //     setError(err.response?.data?.message || "Something went wrong");
+            // }
+            console.log(err)
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-base-200 via-base-300 to-base-200 overflow-y-auto md:overflow-y-hidden">
+        <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-base-200 via-base-300 to-base-200
+                overflow-y-auto md:overflow-y-hidden">
             <div className="w-full max-w-sm rounded-3xl bg-base-100 shadow-2xl p-8">
                 <h2 className="text-2xl font-semibold text-center text-primary" style={{ fontFamily: "var(--font-brand)" }}>
                     devTinder
@@ -58,112 +63,102 @@ const SignUpPage = () => {
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    {isFirstPage ? (
-                        <div className="form-control">
+                    {/* Full Name */}
+                    <>
+                        {isFirstPage ? <div className="form-control">
                             <label className="label">
-                                <span className="label-text text-sm">First Name</span>
+                                <span className="label-text text-sm">first Name</span>
                             </label>
                             <input
                                 type="text"
-                                placeholder="Your Name"
+                                placeholder="Your Name "
                                 value={firstName}
-                                onChange={(e) => {
-                                    setFirstName(e.target.value);
-                                    if (error) setError("");
-                                }}
+                                onChange={(e) => { setFirstName(e.target.value); if (error) setError(""); }}
                                 disabled={loading}
                                 className="input input-bordered rounded-xl w-full"
                                 required
                             />
                             <label className="label">
-                                <span className="label-text text-sm">Last Name</span>
+                                <span className="label-text text-sm"> last name</span>
                             </label>
                             <input
                                 type="text"
-                                placeholder="Your Last Name"
+                                placeholder="Your last name"
                                 value={lastName}
-                                onChange={(e) => {
-                                    setLastName(e.target.value);
-                                    if (error) setError("");
-                                }}
+                                onChange={(e) => { setLastName(e.target.value); if (error) setError(""); }}
                                 disabled={loading}
                                 className="input input-bordered rounded-xl w-full"
                                 required
                             />
                         </div>
-                    ) : (
-                        <>
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text text-sm">Email</span>
-                                </label>
-                                <div className="input input-bordered rounded-xl flex items-center gap-3">
-                                    <Mail size={18} className="text-base-content/50" />
-                                    <input
-                                        type="email"
-                                        placeholder="you@devmail.com"
-                                        value={email}
-                                        onChange={(e) => {
-                                            setEmail(e.target.value);
-                                            if (error) setError("");
-                                        }}
-                                        disabled={loading}
-                                        className="bg-transparent w-full outline-none"
-                                        required
-                                    />
-                                </div>
-                            </div>
 
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text text-sm">Password</span>
-                                </label>
-                                <div className="input input-bordered rounded-xl flex items-center gap-3">
-                                    <Lock size={18} className="text-base-content/50" />
-                                    <input
-                                        type="password"
-                                        placeholder="••••••••"
-                                        value={password}
-                                        onChange={(e) => {
-                                            setPassword(e.target.value);
-                                            if (error) setError("");
-                                        }}
-                                        disabled={loading}
-                                        className="bg-transparent w-full outline-none"
-                                        required
-                                    />
+                            : <>
+                                {/* Email */}
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text text-sm">Email</span>
+                                    </label>
+                                    <div className="input input-bordered rounded-xl flex items-center gap-3">
+                                        <Mail size={18} className="text-base-content/50" />
+                                        <input
+                                            type="email"
+                                            placeholder="you@devmail.com"
+                                            value={email}
+                                            onChange={(e) => { setEmail(e.target.value); if (error) setError(""); }}
+                                            disabled={loading}
+                                            className="bg-transparent w-full outline-none"
+                                            required
+                                        />
+                                    </div>
                                 </div>
-                            </div>
 
-                            {error && (
-                                <div className="alert alert-error flex justify-between items-center rounded-xl text-sm shadow-sm">
-                                    <span>{error}</span>
-                                    <button type="button" onClick={() => setError("")} className="btn btn-ghost btn-xs">
-                                        ✕
-                                    </button>
+                                {/* Password */}
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text text-sm">Password</span>
+                                    </label>
+                                    <div className="input input-bordered rounded-xl flex items-center gap-3">
+                                        <Lock size={18} className="text-base-content/50" />
+                                        <input
+                                            type="password"
+                                            placeholder="••••••••"
+                                            value={password}
+                                            onChange={(e) => { setPassword(e.target.value); if (error) setError(""); }}
+                                            disabled={loading}
+                                            className="bg-transparent w-full outline-none"
+                                            required
+                                        />
+                                    </div>
                                 </div>
-                            )}
-                        </>
-                    )}
 
-                    {isFirstPage ? (
-                        <button
-                            type="button"
-                            className="btn btn-primary w-full h-12 rounded-xl text-base"
-                            onClick={() => setFirstPage(false)}
-                            disabled={loading}
-                        >
-                            Next
-                        </button>
-                    ) : (
-                        <button
-                            type="submit"
-                            className="btn btn-primary w-full h-12 rounded-xl text-base"
-                            disabled={loading}
-                        >
-                            {loading ? "Creating account..." : "Sign Up"}
-                        </button>
-                    )}
+                                {/* Error */}
+                                {error && (
+                                    <div className="alert alert-error flex justify-between items-center rounded-xl text-sm shadow-sm">
+                                        <span>{error}</span>
+                                        <button type="button" onClick={() => setError("")} className="btn btn-ghost btn-xs">
+                                            ✕
+                                        </button>
+                                    </div>
+                                )}
+                            </>
+                        }
+                    </>
+
+
+                    {/* Submit */}
+                    {isFirstPage ? <button
+                        type="button"
+                        className="btn btn-primary w-full h-12 rounded-xl text-base"
+                        onClick={() => setFirstPage(!isFirstPage)}
+                    >
+                        Next
+                    </button> : <button
+                        type="submit"
+                        disabled={loading}
+                        className="btn btn-primary w-full h-12 rounded-xl text-base"
+                    >
+                        {loading ? "Creating account..." : "Sign Up"}
+                    </button>}
                 </form>
 
                 {/* Divider */}
@@ -173,7 +168,7 @@ const SignUpPage = () => {
                     <div className="flex-1 h-px bg-base-300" />
                 </div>
 
-                {/* Social buttons */}
+                {/* Social */}
                 <div className="grid grid-cols-3 gap-3">
                     {[Apple, Chrome, X].map((Icon, i) => (
                         <button
@@ -186,7 +181,7 @@ const SignUpPage = () => {
                     ))}
                 </div>
 
-                {/* Login link */}
+                {/* Login */}
                 <p className="text-center text-sm mt-6 text-base-content/60">
                     Already have an account?{" "}
                     <span
