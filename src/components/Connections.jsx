@@ -21,7 +21,7 @@ const Connections = () => {
   };
 
   useEffect(() => {
-    handleConnections();
+    // handleConnections();
   }, []);
 
   if (connections.length === 0) {

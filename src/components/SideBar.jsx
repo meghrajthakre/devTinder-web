@@ -1,15 +1,19 @@
 import { Flame, Search } from "lucide-react";
 import React from "react";
-
-const users = [
-  { name: "Kevin", msg: "New Match! Say Hello 👋", active: true },
-  { name: "Jared", msg: "New Match! Say Hello 👋" },
-  { name: "David", msg: "You have the cutest smile..." },
-  { name: "Hank", msg: "What are you up to this weekend?" },
-  { name: "Romel", msg: "Flying to Italy tonight..." },
-];
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const SideBar = () => {
+  const users = useSelector((store) => store.connection)
+  const navigate = useNavigate()
+  const formattedUsers = users.map((u) => ({
+    id: u._id,
+    name: `${u.firstName} ${u.lastName}`,
+    msg: "New Match! Say Hello 👋", // temp / last message later
+    active: false, // socket se later
+    avatar: u.photourl,
+  }));
+
   return (
     <aside
       className="hidden md:flex flex-col w-80 h-[calc(100vh-64px)] fixed left-0 top-16 bg-base-100 border-r border-base-300"
@@ -48,18 +52,20 @@ const SideBar = () => {
 
       {/* Chats – scannability & hierarchy */}
       <div className="flex-1 overflow-y-auto">
-        {users.map((u, i) => (
+        {formattedUsers.map((u) => (
           <div
-            key={i}
-            className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition rounded-xl mx-2 my-1 ${
-              u.active
-                ? "bg-primary/10"
-                : "hover:bg-base-200"
-            }`}
+            key={u.id}
+            onClick={() => navigate(`/chats/${u.id}`)} // ✅ CLICK
+            className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition rounded-xl mx-2 my-1 ${u.active ? "bg-primary/10" : "hover:bg-base-200"
+              }`}
           >
-            {/* Avatar + status */}
+            {/* Avatar */}
             <div className="relative">
-              <div className="w-10 h-10 rounded-full bg-base-300" />
+              <img
+                src={u.avatar}
+                alt={u.name}
+                className="w-10 h-10 rounded-full object-cover"
+              />
               {u.active && (
                 <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-primary border-2 border-base-100" />
               )}
@@ -68,13 +74,12 @@ const SideBar = () => {
             {/* Text */}
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">{u.name}</p>
-              <p className="text-xs text-base-content/60 truncate">
-                {u.msg}
-              </p>
+              <p className="text-xs text-base-content/60 truncate">{u.msg}</p>
             </div>
           </div>
         ))}
       </div>
+
     </aside>
   );
 };

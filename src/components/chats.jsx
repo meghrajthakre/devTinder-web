@@ -1,7 +1,7 @@
 import { ArrowLeft, Send } from "lucide-react";
 import React, { useEffect, useRef } from "react";
 const PersonalChat = () => {
-  const messagesEndRef  = useRef(null)
+  const messagesEndRef = useRef(null)
 
   const messages = [
     { id: 1, text: "Kal DSA revise karte hain Kal DSA revise karte hain Kal DSA revise karte hain 💻", sender: "other", time: "10:02 AM" },
@@ -21,22 +21,22 @@ const PersonalChat = () => {
 
   return (
     <div
-  
+
       className="flex flex-col bg-base-100 mt-[63px]"
       style={{ height: "calc(100vh - 128px)" }}
     >
 
       {/* Messages */}
-      <div className="relative flex-1 overflow-y-auto px-4 py-6 pb-24 space-y-4">
+      <div className="relative flex-1 overflow-y-auto px-4 py-6 pb-18 space-y-4">
         {messages.map((msg) => (
-          <div 
+          <div
             key={msg.id}
             className={`flex ${msg.sender === "me" ? "justify-end" : "justify-start"
               }`}
           >
             <div
               className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm shadow
-                ${msg.sender === "me"
+          ${msg.sender === "me"
                   ? "bg-primary text-primary-content rounded-br-none"
                   : "bg-base-200 rounded-bl-none"
                 }`}
@@ -48,7 +48,11 @@ const PersonalChat = () => {
             </div>
           </div>
         ))}
+
+        {/* 👇 Scroll anchor */}
+        <div ref={messagesEndRef} />
       </div>
+
 
       {/* Input Bar (sticky, no overlap) */}
       <div className="sticky bottom-0 bg-base-100 px-4 py-3">
