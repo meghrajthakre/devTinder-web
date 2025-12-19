@@ -56,7 +56,7 @@ const BottomNav = () => {
       </NavLink>
 
       {/* CENTER EMPHASIS */}
-      <NavLink to="/matches" className={itemClass}>
+      <NavLink to="/connections" className={itemClass}>
         {({ isActive }) => (
           <>
             <HeartHandshake

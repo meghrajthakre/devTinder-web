@@ -14,6 +14,7 @@ import SignUpPage from './components/SignUpPage';
 
 import appStore from './utils/appStore';
 import { socket } from './utils/socket'; 
+import Chats from './components/chats';
 
 const App = () => {
 
@@ -25,6 +26,8 @@ const App = () => {
       .split('; ')
       .find(row => row.startsWith('token='))
       ?.split('=')[1];
+
+    console.log(token)
 
     // 2️⃣ If user is logged in, connect socket
     if (token) {
@@ -52,6 +55,7 @@ const App = () => {
           <Route path='profileEdit' element={<EditePage />} />
           <Route path='connections' element={<Connections />} />
           <Route path='requests' element={<RequestsPage />} />
+          <Route path='chats' element={<Chats />} />
         </Route>
 
         <Route path='/login' element={<Login />} />
