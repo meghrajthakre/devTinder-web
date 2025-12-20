@@ -8,7 +8,7 @@ const connectionSlice = createSlice({
         clearConnections: () => [],
     },
 });
-export const { setConnection, removeConnection } =
+export const { setConnection, removeConnection , clearConnections} =
     connectionSlice.actions;
 
 export default connectionSlice.reducer;

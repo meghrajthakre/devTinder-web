@@ -8,6 +8,7 @@ import { removeUser } from "../utils/userSlice";
 import { removeFeed } from "../utils/feedSlice";
 import Theme from "./theme/Theme";
 import { MapPin } from "lucide-react";
+import { clearConnections } from "../utils/connectionSlice";
 
 
 const Navbar = () => {
@@ -39,6 +40,7 @@ const Navbar = () => {
       );
       dispatch(removeUser());
       dispatch(removeFeed());
+      dispatch(clearConnections())
       navigate("/login");
     } catch (error) {
       console.log(error);

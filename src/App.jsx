@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
 
@@ -14,29 +13,10 @@ import RequestsPage from "./components/RequestsPage";
 import SignUpPage from "./components/SignUpPage";
 import Chats from "./components/chats";
 
-import { BASE_URL } from "./utils/constant";
-import { setConnection } from "./utils/connectionSlice";
 import { socket } from "./utils/socket";
 
 const App = () => {
-  const dispatch = useDispatch();
-
-  // ✅ App load par connections fetch
-  useEffect(() => {
-    const handleConnections = async () => {
-      try {
-        const res = await axios.get(
-          BASE_URL + "/user/connections",
-          { withCredentials: true }
-        );
-        dispatch(setConnection(res.data.request || []));
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    handleConnections();
-  }, [dispatch]);
+  
 
   // ✅ Socket connect on app load
   useEffect(() => {

@@ -6,6 +6,7 @@ import { addFeed } from "../utils/feedSlice";
 import UserCard from "./UserCards";
 import BottomNav from "./BottomNav";
 import UserCards from "./UserCards";
+import { setConnection } from "../utils/connectionSlice";
 
 const Feed = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,26 @@ const Feed = () => {
   useEffect(() => {
     fetchFeed();
   }, []);
+
+
+  // ✅ App load par connections fetch
+  useEffect(() => {
+    const handleConnections = async () => {
+      try {
+        const res = await axios.get(
+          BASE_URL + "/user/connections",
+          { withCredentials: true }
+        );
+        dispatch(setConnection(res.data.request || []));
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    handleConnections();
+  }, [dispatch]);
+
+
   // 🔥 FIX: Prevents null / empty error
   if (!feed || feed.length === 0) {
     return <p className="text-center mt-[70px]">Loading feed...</p>;

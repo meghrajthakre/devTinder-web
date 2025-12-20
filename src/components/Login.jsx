@@ -35,7 +35,7 @@ const Login = () => {
           timeout: 8000,
         }
       );
-
+      
       dispatch(addUser(res.data));
       navigate("/feed");
     } catch (err) {
