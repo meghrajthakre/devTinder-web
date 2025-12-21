@@ -48,7 +48,8 @@ const App = () => {
           <Route path="profileEdit" element={<EditePage />} />
           <Route path="connections" element={<Connections />} />
           <Route path="requests" element={<RequestsPage />} />
-          <Route path="chats" element={<Chats />} />
+          {/* <Route path="chats" element={<Chats />} /> */}
+          <Route path="/chats/:userId" element={<Chats />} />
         </Route>
 
         <Route path="/login" element={<Login />} />

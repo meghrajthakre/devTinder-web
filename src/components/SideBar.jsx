@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Flame, Search } from "lucide-react";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -13,6 +14,29 @@ const SideBar = () => {
     active: false, // socket se later
     avatar: u.photourl,
   }));
+
+
+  const handleChats = async (userId) => {
+    try {
+      // 1️⃣ hit chat create / fetch API
+      const res = await axios.post(
+        `/chat/${userId}`,
+        {},
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${localStorage.getItem("token")}`,
+        //   },
+        // }
+      );
+
+      const chatId = res.data._id; // 🔥 most important
+
+      // 2️⃣ open that chat
+      navigate(`/chats/${chatId}`);
+    } catch (error) {
+      console.error("Chat create error", error);
+    }
+  };
 
   return (
     <aside
@@ -55,7 +79,7 @@ const SideBar = () => {
         {formattedUsers.map((u) => (
           <div
             key={u.id}
-            onClick={() => navigate(`/chats/${u.id}`)} // ✅ CLICK
+            onClick={() => handleChats(u.id)} // ✅ CLICK
             className={`flex items-center gap-3 px-4 py-3 cursor-pointer transition rounded-xl mx-2 my-1 ${u.active ? "bg-primary/10" : "hover:bg-base-200"
               }`}
           >
