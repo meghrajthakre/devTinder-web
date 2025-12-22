@@ -14,8 +14,31 @@ import SignUpPage from "./components/SignUpPage";
 import Chats from "./components/chats";
 
 import { socket } from "./utils/socket";
+import SideBar from "./components/SideBar";
+import AllChats from "./AllChats";
+import { useDispatch, useSelector } from "react-redux";
+import { BASE_URL } from "./utils/constant";
+import { setConnection } from "./utils/connectionSlice";
 
 const App = () => {
+    const dispatch = useDispatch();
+  const connections = useSelector((store) => store.connection);
+
+  const handleConnections = async () => {
+    try {
+      const res = await axios(BASE_URL + "/user/connections", {
+        withCredentials: true,
+      });
+
+      dispatch(setConnection(res.data.request || []));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    handleConnections();
+  }, []);
 
 
   // ✅ Socket connect on app load
@@ -49,6 +72,7 @@ const App = () => {
           <Route path="connections" element={<Connections />} />
           <Route path="requests" element={<RequestsPage />} />
           <Route path="chat/:chatId" element={<Chats />} />
+          <Route path="chats" element={<AllChats />} />
 
         </Route>
 

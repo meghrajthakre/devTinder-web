@@ -26,7 +26,10 @@ const SideBar = () => {
         {},
         { withCredentials: true } // ✅ VERY IMPORTANT
       );
-      disptach(setChats(res.data))
+    
+      disptach( 
+       setChats(res.data.users[1])
+      )
       navigate(`/chat/${res.data._id}`);
     } catch (error) {
       console.error("Chat access error:", error.response?.data || error.message);

@@ -95,7 +95,7 @@ const Navbar = () => {
             className="flex items-center gap-2 cursor-pointer"
             onClick={() => setOpenDropdown(!openDropdown)}
           >
-            <p className="hidden md:block text-sm text-base-content/70">
+            <p className="hidden md:block text-sm text-base-content/70 text-primary">
               Hi, {user?.firstName || "Guest"}
             </p>
 

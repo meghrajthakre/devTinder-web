@@ -7,6 +7,7 @@ import {
   UserCircle2,
 } from "lucide-react";
 import React from "react";
+import SideBar from '../components/SideBar';
 
 const BottomNav = () => {
 
@@ -68,14 +69,14 @@ const BottomNav = () => {
         )}
       </NavLink>
 
-      {/* <NavLink to="/chats" className={itemClass}>
+      <NavLink to="/chats" className={itemClass}>
         {({ isActive }) => (
           <>
             <MessageCircleHeart {...iconProps(isActive)} />
             <span className={labelClass(isActive)}>Chats</span>
           </>
         )}
-      </NavLink> */}
+      </NavLink>
 
       <NavLink to="/profile" className={itemClass}>
         {({ isActive }) => (
