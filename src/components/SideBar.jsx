@@ -1,13 +1,15 @@
 import axios from "axios";
 import { Flame, Search } from "lucide-react";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
+import { setChats } from "../utils/chatUsersSlice";
 
 const SideBar = () => {
   const users = useSelector((store) => store.connection);
   const navigate = useNavigate();
+  const disptach = useDispatch();
 
   const formattedUsers = users.map((u) => ({
     id: u._id,
@@ -24,7 +26,7 @@ const SideBar = () => {
         {},
         { withCredentials: true } // ✅ VERY IMPORTANT
       );
-      console.log(res.data)
+      disptach(setChats(res.data))
       navigate(`/chat/${res.data._id}`);
     } catch (error) {
       console.error("Chat access error:", error.response?.data || error.message);

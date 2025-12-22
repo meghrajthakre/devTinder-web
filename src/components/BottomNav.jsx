@@ -68,14 +68,14 @@ const BottomNav = () => {
         )}
       </NavLink>
 
-      <NavLink to="/chats" className={itemClass}>
+      {/* <NavLink to="/chats" className={itemClass}>
         {({ isActive }) => (
           <>
             <MessageCircleHeart {...iconProps(isActive)} />
             <span className={labelClass(isActive)}>Chats</span>
           </>
         )}
-      </NavLink>
+      </NavLink> */}
 
       <NavLink to="/profile" className={itemClass}>
         {({ isActive }) => (
