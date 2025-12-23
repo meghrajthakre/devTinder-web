@@ -9,6 +9,8 @@ import { removeFeed } from "../utils/feedSlice";
 import Theme from "./theme/Theme";
 import { MapPin } from "lucide-react";
 import { clearConnections } from "../utils/connectionSlice";
+import { Socket } from "socket.io-client";
+import { socket } from "../utils/socket";
 
 
 const Navbar = () => {
@@ -41,6 +43,8 @@ const Navbar = () => {
       dispatch(removeUser());
       dispatch(removeFeed());
       dispatch(clearConnections())
+      socket.disconnect();     // 🔥 VERY IMPORTANT
+      socket.off();
       navigate("/login");
     } catch (error) {
       console.log(error);

@@ -5,6 +5,7 @@ import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
 import { Mail, Lock, Apple, Chrome, X } from "lucide-react";
+import { socket } from "../utils/socket";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ const Login = () => {
       
       dispatch(addUser(res.data));
       navigate("/feed");
+      socket.connect();  
     } catch (err) {
       if (err.code === "ECONNABORTED") {
         setError("Server is taking too long. Try again.");

@@ -24,13 +24,13 @@ const SideBar = () => {
       const res = await axios.post(
         `${BASE_URL}/chat/access/${userId}`,
         {},
-        { withCredentials: true } // ✅ VERY IMPORTANT
+        { withCredentials: true } 
       );
     
       disptach( 
-       setChats(res.data.users[1])
+       setChats(res.data)
       )
-      navigate(`/chat/${res.data._id}`);
+      navigate(`/chat/access/${res.data._id}`);
     } catch (error) {
       console.error("Chat access error:", error.response?.data || error.message);
     }

@@ -71,7 +71,7 @@ const App = () => {
           <Route path="profileEdit" element={<EditePage />} />
           <Route path="connections" element={<Connections />} />
           <Route path="requests" element={<RequestsPage />} />
-          <Route path="chat/:chatId" element={<Chats />} />
+          <Route path="chat/access/:chatId" element={<Chats />} />
           <Route path="chats" element={<AllChats />} />
 
         </Route>
