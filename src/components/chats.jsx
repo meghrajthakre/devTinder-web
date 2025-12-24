@@ -13,6 +13,9 @@ const Chats = () => {
 
   const user = useSelector((store) => store.user);
   const chat = useSelector((store) => store.ChatUsers);
+  const chatPartner = chat.users?.find(u => u._id !== user._id);
+  
+  console.log("Current chat user:", chat);
 
   /* 🔹 Load old messages (history) */
   useEffect(() => {
@@ -30,14 +33,17 @@ const Chats = () => {
 
     // ⭐ join room
     socket.emit("join-chat", chat._id);
-    console.log("✅ Joined chat room:", chat._id);
+   
 
     // ⭐ receive realtime messages
-    const handleReceiveMessage = (newMessage) => {
-      if (String(newMessage.chat) === String(chat._id)) {
-        setMessages((prev) => [...prev, newMessage]);
-      }
-    };
+  const handleReceiveMessage = (newMessage) => {
+  // 🔴 Ignore own message (already added via optimistic UI)
+  if (String(newMessage.sender?._id) === String(user._id)) return;
+
+  if (String(newMessage.chat) === String(chat._id)) {
+    setMessages((prev) => [...prev, newMessage]);
+  }
+};
 
     socket.on("receive-message", handleReceiveMessage);
 
@@ -81,12 +87,12 @@ const Chats = () => {
       {/* HEADER */}
       <div className="sticky top-0 flex items-center gap-3 border-b px-4 py-3 shadow bg-base-100 z-10">
         <img
-          src={chat?.photourl || "https://i.pravatar.cc/40"}
+          src={chatPartner?.photourl || "https://i.pravatar.cc/40"}
           className="h-9 w-9 rounded-full"
           alt="avatar"
         />
         <div className="font-semibold">
-          {chat?.firstName} {chat?.lastName}
+          {chatPartner?.firstName} {chatPartner?.lastName}
         </div>
       </div>
 
