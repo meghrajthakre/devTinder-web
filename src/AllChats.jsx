@@ -26,7 +26,7 @@ const AllChats = () => {
         { withCredentials: true }
       );
 
-      dispatch(setChats(res.data.users[1]));
+      dispatch(setChats(res.data));
       navigate(`/chat/${res.data._id}`);
     } catch (error) {
       console.error(

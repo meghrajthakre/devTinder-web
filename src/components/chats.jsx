@@ -7,47 +7,42 @@ import { BASE_URL } from "../utils/constant";
 
 const Chats = () => {
   const messagesEndRef = useRef(null);
+
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
   const user = useSelector((store) => store.user);
   const chat = useSelector((store) => store.ChatUsers);
-  
 
-  /* 🔹 Load messages */
+  /* 🔹 Load old messages (history) */
   useEffect(() => {
     if (!chat?._id) return;
 
     axios
-      .get(`${BASE_URL}/message/${chat._id}`, {
-        withCredentials: true
-      })
+      .get(`${BASE_URL}/message/${chat._id}`, { withCredentials: true })
       .then((res) => setMessages(res.data))
       .catch(console.error);
   }, [chat?._id]);
 
-  /* 🔹 Socket lifecycle */
+  /* ⭐ JOIN CHAT ROOM + RECEIVE MESSAGE */
   useEffect(() => {
-    if (!chat?._id || !user?.token) return;
+    if (!chat?._id) return;
 
-    // connect ONLY once
-    if (!socket.connected) {
-      socket.auth = { token: user.token };
-      socket.connect();
-    }
-
+    // ⭐ join room
     socket.emit("join-chat", chat._id);
+    console.log("✅ Joined chat room:", chat._id);
 
-    const handleReceive = (newMessage) => {
-      if (newMessage.chat === chat._id) {
+    // ⭐ receive realtime messages
+    const handleReceiveMessage = (newMessage) => {
+      if (String(newMessage.chat) === String(chat._id)) {
         setMessages((prev) => [...prev, newMessage]);
       }
     };
 
-    socket.on("receive-message", handleReceive);
+    socket.on("receive-message", handleReceiveMessage);
 
     return () => {
-      socket.off("receive-message", handleReceive);
+      socket.off("receive-message", handleReceiveMessage);
     };
   }, [chat?._id]);
 
@@ -58,7 +53,17 @@ const Chats = () => {
 
   /* 🔹 Send message */
   const sendMessage = () => {
-    if (!message.trim()) return;
+    if (!message.trim() || !chat?._id) return;
+
+    // ⭐ Optimistic UI
+    const tempMessage = {
+      _id: Date.now(),
+      content: message,
+      sender: { _id: user._id },
+      chat: chat._id,
+    };
+
+    setMessages((prev) => [...prev, tempMessage]);
 
     socket.emit("send-message", {
       chatId: chat._id,
@@ -74,10 +79,11 @@ const Chats = () => {
       style={{ height: "calc(100vh - 128px)" }}
     >
       {/* HEADER */}
-      <div className="sticky top-0 flex items-center gap-3 border-b px-4 py-3 shadow">
+      <div className="sticky top-0 flex items-center gap-3 border-b px-4 py-3 shadow bg-base-100 z-10">
         <img
           src={chat?.photourl || "https://i.pravatar.cc/40"}
           className="h-9 w-9 rounded-full"
+          alt="avatar"
         />
         <div className="font-semibold">
           {chat?.firstName} {chat?.lastName}
@@ -87,15 +93,18 @@ const Chats = () => {
       {/* MESSAGES */}
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
         {messages.map((msg) => {
-          const isMe = msg.sender?._id === user._id;
+          const isMe = String(msg.sender?._id) === String(user._id);
 
           return (
-            <div key={msg._id} className={`flex ${isMe ? "justify-end" : ""}`}>
+            <div
+              key={msg._id}
+              className={`flex ${isMe ? "justify-end" : "justify-start"}`}
+            >
               <div
                 className={`px-4 py-2 rounded-2xl text-sm shadow max-w-[75%]
                 ${isMe ? "bg-primary text-white" : "bg-base-300"}`}
               >
-                <p>{msg.content}</p>
+                {msg.content}
               </div>
             </div>
           );
@@ -104,11 +113,12 @@ const Chats = () => {
       </div>
 
       {/* INPUT */}
-      <div className="flex gap-2 p-3">
+      <div className="flex gap-2 p-3 border-t">
         <input
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          placeholder="Type a message..."
           className="input input-bordered flex-1 rounded-full"
         />
         <button onClick={sendMessage} className="btn btn-primary btn-circle">
