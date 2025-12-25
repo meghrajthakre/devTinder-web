@@ -14,8 +14,7 @@ const Chats = () => {
   const user = useSelector((store) => store.user);
   const chat = useSelector((store) => store.ChatUsers);
   const chatPartner = chat.users?.find(u => u._id !== user._id);
-  
-  console.log("Current chat user:", chat);
+
 
   /* 🔹 Load old messages (history) */
   useEffect(() => {
@@ -33,17 +32,17 @@ const Chats = () => {
 
     // ⭐ join room
     socket.emit("join-chat", chat._id);
-   
+
 
     // ⭐ receive realtime messages
-  const handleReceiveMessage = (newMessage) => {
-  // 🔴 Ignore own message (already added via optimistic UI)
-  if (String(newMessage.sender?._id) === String(user._id)) return;
+    const handleReceiveMessage = (newMessage) => {
+      // 🔴 Ignore own message (already added via optimistic UI)
+      if (String(newMessage.sender?._id) === String(user._id)) return;
 
-  if (String(newMessage.chat) === String(chat._id)) {
-    setMessages((prev) => [...prev, newMessage]);
-  }
-};
+      if (String(newMessage.chat) === String(chat._id)) {
+        setMessages((prev) => [...prev, newMessage]);
+      }
+    };
 
     socket.on("receive-message", handleReceiveMessage);
 
@@ -108,7 +107,7 @@ const Chats = () => {
             >
               <div
                 className={`px-4 py-2 rounded-2xl text-sm shadow max-w-[75%]
-                ${isMe ? "bg-primary text-white" : "bg-base-300"}`}
+                ${isMe ? "bg-primary text-primary-content" : "bg-base-300"}`}
               >
                 {msg.content}
               </div>
@@ -121,6 +120,7 @@ const Chats = () => {
       {/* INPUT */}
       <div className="flex gap-2 p-3 border-t">
         <input
+          autoFocus
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}

@@ -21,8 +21,8 @@ import { BASE_URL } from "./utils/constant";
 import { setConnection } from "./utils/connectionSlice";
 
 const App = () => {
-    const dispatch = useDispatch();
-  const connections = useSelector((store) => store.connection);
+  const dispatch = useDispatch();
+  const user = useSelector((store) => store.user);
 
   const handleConnections = async () => {
     try {
@@ -43,6 +43,8 @@ const App = () => {
 
   // ✅ Socket connect on app load
   useEffect(() => {
+    if (!user?._id) return;
+
     const token = document.cookie
       .split("; ")
       .find(row => row.startsWith("token="))
@@ -51,14 +53,15 @@ const App = () => {
     if (token) {
       socket.auth = { token };
       socket.connect();
-      console.log("Socket connected from App.jsx");
+      console.log("✅ Socket connected");
     }
 
     return () => {
       socket.disconnect();
-      console.log("Socket disconnected from App.jsx");
+      socket.off();
+      console.log("❌ Socket disconnected");
     };
-  }, []);
+  }, [user?._id]);
 
   return (
     <>
