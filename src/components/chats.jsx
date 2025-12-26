@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { socket } from "../utils/socket";
 import axios from "axios";
 import { BASE_URL } from "../utils/constant";
+import Back from "./buttons/Back";
 
 const Chats = () => {
   const messagesEndRef = useRef(null);
@@ -84,15 +85,20 @@ const Chats = () => {
       style={{ height: "calc(100vh - 128px)" }}
     >
       {/* HEADER */}
-      <div className="sticky top-0 flex items-center gap-3 border-b px-4 py-3 shadow bg-base-100 z-10">
-        <img
-          src={chatPartner?.photourl || "https://i.pravatar.cc/40"}
-          className="h-9 w-9 rounded-full"
-          alt="avatar"
-        />
-        <div className="font-semibold">
-          {chatPartner?.firstName} {chatPartner?.lastName}
+      <div className="sticky top-0 flex items-center justify-between gap-3 border-b px-4 py-2 shadow bg-base-100 z-10">
+        <div className="flex items-center gap-2">
+          <img
+            src={chatPartner?.photourl || "https://i.pravatar.cc/40"}
+            className="h-9 w-9 rounded-full"
+            alt="avatar"
+          />
+          <div className="font-semibold">
+            {chatPartner?.firstName} {chatPartner?.lastName}
+          </div>
         </div>
+       <div className="sm:flex md:hidden">
+         <Back />
+       </div>
       </div>
 
       {/* MESSAGES */}
