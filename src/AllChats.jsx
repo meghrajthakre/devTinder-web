@@ -29,7 +29,7 @@ const AllChats = () => {
 
       dispatch(setChats(res.data));
      
-      navigate(`/chat/${res.data._id}`);
+      navigate(`/chat/access/${res.data._id}`);
 
     } catch (error) {
       console.error(
@@ -41,7 +41,7 @@ const AllChats = () => {
 
   return (
     /* ❌ Desktop hide | ✅ Mobile only */
-    <div className="md:hidden h-screen bg-base-100 mt-[62px]">
+    <div className="md:hidden bg-base-100 mt-[62px]">
 
       {/* 🔹 Header */}
       <div className="sticky top-0 z-10 bg-base-100 border-b border-base-300 px-4 py-3 flex items-center gap-2">
