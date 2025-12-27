@@ -37,7 +37,7 @@ const SideBar = () => {
   };
 
   return (
-    <aside className="hidden md:flex flex-col w-80 h-[calc(100vh-64px)] fixed left-0 top-16 bg-base-100 border-r border-base-300">
+    <aside className="hidden md:flex flex-col w-80 h-[calc(100vh-120px)] fixed left-0 top-16 bg-base-100 border-r border-base-300">
       {/* Discover */}
       <div className="p-4 border-b border-base-300">
         <button className="w-full flex items-center gap-3 p-3 rounded-2xl bg-primary/10 hover:bg-primary/20 transition">

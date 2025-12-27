@@ -16,9 +16,9 @@ const BottomNav = () => {
      px-3 py-2 rounded-2xl
      transition-all duration-200
      ${isActive
-        ? " text-primary scale-110"
-        : "text-base-content/60 hover:bg-base-200"}`
-  
+      ? " text-primary scale-110"
+      : "text-base-content/60 hover:bg-base-200"}`
+
   const iconProps = (isActive) => ({
     size: 22,
     strokeWidth: isActive ? 2.2 : 1.8,
@@ -46,6 +46,15 @@ const BottomNav = () => {
           </>
         )}
       </NavLink>
+      
+      <NavLink to="/chats" className={itemClass}>
+        {({ isActive }) => (
+          <>
+            <MessageCircleHeart {...iconProps(isActive)} />
+            <span className={labelClass(isActive)}>Chats</span>
+          </>
+        )}
+      </NavLink>
 
       <NavLink to="/Requests" className={itemClass}>
         {({ isActive }) => (
@@ -62,21 +71,14 @@ const BottomNav = () => {
           <>
             <HeartHandshake
               {...iconProps(isActive)}
-             
+
             />
             <span className={labelClass(isActive)}>Matches</span>
           </>
         )}
       </NavLink>
 
-      <NavLink to="/chats" className={itemClass}>
-        {({ isActive }) => (
-          <>
-            <MessageCircleHeart {...iconProps(isActive)} />
-            <span className={labelClass(isActive)}>Chats</span>
-          </>
-        )}
-      </NavLink>
+
 
       <NavLink to="/profile" className={itemClass}>
         {({ isActive }) => (

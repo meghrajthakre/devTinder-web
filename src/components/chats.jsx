@@ -135,7 +135,7 @@ const Chats = () => {
                   className={`px-4 py-2 rounded-2xl text-sm leading-relaxed shadow-sm
             ${isMe
                       ? "bg-primary text-primary-content rounded-br-md"
-                      : "bg-base-300 rounded-bl-md"
+                      : "bg-base-100 rounded-bl-md"
                     }`}
                 >
                   {msg.content}
