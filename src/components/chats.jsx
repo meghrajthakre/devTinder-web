@@ -23,7 +23,8 @@ const Chats = () => {
 
     axios
       .get(`${BASE_URL}/message/${chat._id}`, { withCredentials: true })
-      .then((res) => setMessages(res.data))
+      .then((res) => setMessages(res.data, console.log(res.data)))
+
       .catch(console.error);
   }, [chat?._id]);
 
@@ -78,7 +79,13 @@ const Chats = () => {
 
     setMessage("");
   };
-
+  const formatTime = (date) => {
+    if (!date) return "";
+    return new Date(date).toLocaleTimeString("en-IN", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
   return (
     <div
       className="flex flex-col bg-base-100 mt-[63px]"
@@ -96,32 +103,70 @@ const Chats = () => {
             {chatPartner?.firstName} {chatPartner?.lastName}
           </div>
         </div>
-       <div className="sm:flex md:hidden">
-         <Back />
-       </div>
+        <div className="sm:flex md:hidden">
+          <Back />
+        </div>
       </div>
 
       {/* MESSAGES */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
+      
+      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4 bg-base-200">
         {messages.map((msg) => {
           const isMe = String(msg.sender?._id) === String(user._id);
 
           return (
             <div
               key={msg._id}
-              className={`flex ${isMe ? "justify-end" : "justify-start"}`}
+              className={`flex items-end gap-2 ${isMe ? "justify-end" : "justify-start"
+                }`}
             >
-              <div
-                className={`px-4 py-2 rounded-2xl text-sm shadow max-w-[75%]
-                ${isMe ? "bg-primary text-primary-content" : "bg-base-300"}`}
-              >
-                {msg.content}
+              {/* 👤 Avatar (other user) */}
+              {!isMe && (
+                <img
+                  src={msg.sender?.photourl || "https://i.pravatar.cc/40"}
+                  alt="avatar"
+                  className="h-6 w-6 rounded-full object-cover"
+                />
+              )}
+
+              {/* 💬 Message */}
+              <div className="flex flex-col max-w-[70%]">
+                <div
+                  className={`px-4 py-2 rounded-2xl text-sm leading-relaxed shadow-sm
+            ${isMe
+                      ? "bg-primary text-primary-content rounded-br-md"
+                      : "bg-base-300 rounded-bl-md"
+                    }`}
+                >
+                  {msg.content}
+                </div>
+
+                {/* ⏰ Time */}
+                <span
+                  className={`mt-1 text-[10px] text-gray-500 ${isMe ? "text-right pr-1" : "text-left pl-1"
+                    }`}
+                >
+                  {formatTime(msg.createdAt)}
+                </span>
               </div>
+
+              {/* 👤 Avatar (you) */}
+              {isMe && (
+                <img
+                  src={user.photourl || "https://i.pravatar.cc/40"}
+                  alt="avatar"
+                  className="h-6 w-6 rounded-full object-cover"
+                />
+              )}
             </div>
           );
         })}
+
         <div ref={messagesEndRef} />
       </div>
+
+
+
 
       {/* INPUT */}
       <div className="flex gap-2 p-3 border-t">
