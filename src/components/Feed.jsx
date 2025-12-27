@@ -60,11 +60,11 @@ const Feed = () => {
   };
 
   if (!feed || feed.length === 0) {
-    return <p className="text-center mt-[70px]">No more profiles 😴</p>;
+    return <p className="text-center mt-[90px]">No more profiles 😴</p>;
   }
 
   return (
-    <div className="flex items-center justify-center mt-20">
+    <div className="flex items-center justify-center mt-25">
       <SwipeStack feed={feed} onSwipe={handleSwipe} />
     </div>
   );

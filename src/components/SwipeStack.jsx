@@ -26,45 +26,45 @@ const Card = styled(motion.div)`
 const swipeConfidenceThreshold = 12000;
 
 const SwipeStack = ({ feed, onSwipe }) => {
-  return (
-    <Stack>
-      {feed.slice(0, 3).map((user, index) => (
-        <Card
-          key={user._id}
-          drag={index === 0 ? "x" : false}
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.8}
-          whileTap={{ scale: 1.05 }}
-          onDragEnd={(e, info) => {
-            const swipe = info.offset.x * info.velocity.x;
+    console.log("SwipeStack feed:", feed);
+    return (
+        <Stack>
+            {feed.slice(0, 3).map((user, index) => (
+                <Card
+                    key={user._id}
+                    drag={index === 0 ? "x" : false}
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.8}
+                    whileTap={{ scale: 1.05 }}
+                    onDragEnd={(e, info) => {
+                        if (info.offset.x > 120) {
+                            onSwipe(user, "ignored"); // 👉 RIGHT SWIPE
+                        }
+                        else if (info.offset.x < -120) {
+                            onSwipe(user, "interested"); // 👉 LEFT SWIPE
+                        }
+                    }}
+                    initial={{ scale: 1 - index * 0.05, y: index * 10 }}
+                    animate={{ scale: 1 - index * 0.05, y: index * 10 }}
+                    style={{ zIndex: feed.length - index }}
+                >
+                    {/* Card Content */}
+                    <img
+                        src={user.photourl}
+                        alt={user.firstName}
+                        className="w-full h-[70%] object-cover"
+                    />
 
-            if (swipe > swipeConfidenceThreshold) {
-              onSwipe(user, "interested");
-            } else if (swipe < -swipeConfidenceThreshold) {
-              onSwipe(user, "ignored");
-            }
-          }}
-          initial={{ scale: 1 - index * 0.05, y: index * 10 }}
-          animate={{ scale: 1 - index * 0.05, y: index * 10 }}
-          style={{ zIndex: feed.length - index }}
-        >
-          {/* Card Content */}
-          <img
-            src={user.photourl}
-            alt={user.firstName}
-            className="w-full h-[70%] object-cover"
-          />
-
-          <div className="p-4">
-            <h2 className="text-xl font-semibold">
-              {user.firstName} {user.lastName}
-            </h2>
-            <p className="text-sm text-gray-500">{user.bio}</p>
-          </div>
-        </Card>
-      ))}
-    </Stack>
-  );
+                    <div className="p-4">
+                        <h2 className="text-xl font-semibold">
+                            {user.firstName} {user.lastName}
+                        </h2>
+                        <p className="text-sm text-gray-500">{user.bio}</p>
+                    </div>
+                </Card>
+            ))}
+        </Stack>
+    );
 };
 
 export default SwipeStack;
