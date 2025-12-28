@@ -33,9 +33,8 @@ const SignUpPage = () => {
         { firstName, lastName, email, password },
         { withCredentials: true, timeout: 8000 }
       );
-
-      dispatch(addUser(res.data));
-      navigate("/profile");
+      dispatch(addUser(res.data.user));
+      navigate("/feed");
     } catch (err) {
       if (err.code === "ECONNABORTED") {
         setError("Server is taking too long. Try again.");
@@ -66,14 +65,12 @@ const SignUpPage = () => {
         {/* Progress Indicator */}
         <div className="flex justify-center gap-2 mb-6">
           <div
-            className={`h-2 w-8 rounded ${
-              isFirstPage ? "bg-primary" : "bg-base-300"
-            }`}
+            className={`h-2 w-8 rounded ${isFirstPage ? "bg-primary" : "bg-base-300"
+              }`}
           />
           <div
-            className={`h-2 w-8 rounded ${
-              !isFirstPage ? "bg-primary" : "bg-base-300"
-            }`}
+            className={`h-2 w-8 rounded ${!isFirstPage ? "bg-primary" : "bg-base-300"
+              }`}
           />
         </div>
 

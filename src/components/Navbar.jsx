@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Sun, Moon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -9,7 +8,6 @@ import { removeFeed } from "../utils/feedSlice";
 import Theme from "./theme/Theme";
 import { MapPin } from "lucide-react";
 import { clearConnections } from "../utils/connectionSlice";
-import { Socket } from "socket.io-client";
 import { socket } from "../utils/socket";
 
 
@@ -43,7 +41,7 @@ const Navbar = () => {
       dispatch(removeUser());
       dispatch(removeFeed());
       dispatch(clearConnections())
-      socket.disconnect();     // 🔥 VERY IMPORTANT
+      socket.disconnect();    
       socket.off();
       navigate("/login");
     } catch (error) {

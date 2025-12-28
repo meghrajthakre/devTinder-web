@@ -36,10 +36,10 @@ const Login = () => {
           timeout: 8000,
         }
       );
-      
+
       dispatch(addUser(res.data));
       navigate("/feed");
-      socket.connect();  
+      socket.connect();
     } catch (err) {
       if (err.code === "ECONNABORTED") {
         setError("Server is taking too long. Try again.");
@@ -183,7 +183,7 @@ const Login = () => {
           New here?{" "}
           <span
             onClick={() => navigate("/signup")}
-            className="text-secondary font-semibold cursor-pointer"
+            className="text-secondary font-semibold cursor-pointer hover:text-primary"
           >
             Create account
           </span>
