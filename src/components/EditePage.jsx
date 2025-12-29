@@ -76,7 +76,7 @@ const EditProfile = () => {
           skills: skills
             .split(",")
             .map((s) => s.trim())
-            .filter(Boolean), // ✅ ARRAY
+            .filter(Boolean),
           photourl: photo,
           photos,
           mobile,
