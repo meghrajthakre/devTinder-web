@@ -14,7 +14,6 @@ const SideBar = () => {
   const formattedUsers = users.map((u) => ({
     id: u._id,
     name: `${u.firstName} ${u.lastName}`,
-    msg: "New Match! Say Hello 👋",
     active: false,
     avatar: u.photourl,
   }));
@@ -83,7 +82,6 @@ const SideBar = () => {
             />
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">{u.name}</p>
-              <p className="text-xs text-base-content/60 truncate">{u.msg}</p>
             </div>
           </div>
         ))}
