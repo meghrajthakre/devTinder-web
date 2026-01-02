@@ -27,7 +27,7 @@ const AllChats = () => {
   }));
 
   /* 🔹 Search filter */
-  const filteredUsers = users.filter((u) =>
+  const filteredUsers = formattedUsers.filter((u) =>
     u.name.toLowerCase().includes(search.toLowerCase())
   );
 
