@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Flame, Search } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constant";
@@ -11,6 +11,10 @@ const SideBar = () => {
   const navigate = useNavigate();
   const disptach = useDispatch();
 
+  /* 🔍 Search state */
+  const [search, setSearch] = useState("");
+
+  /* 🔹 Format users */
   const formattedUsers = users.map((u) => ({
     id: u._id,
     name: `${u.firstName} ${u.lastName}`,
@@ -18,17 +22,20 @@ const SideBar = () => {
     avatar: u.photourl,
   }));
 
+  /* 🔍 Name-based search filter */
+  const filteredUsers = formattedUsers.filter((u) =>
+    u.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   const handleChats = async (userId) => {
     try {
       const res = await axios.post(
         `${BASE_URL}/chat/access/${userId}`,
         {},
-        { withCredentials: true } 
+        { withCredentials: true }
       );
-    
-      disptach( 
-       setChats(res.data)
-      )
+
+      disptach(setChats(res.data));
       navigate(`/chat/access/${res.data._id}`);
     } catch (error) {
       console.error("Chat access error:", error.response?.data || error.message);
@@ -37,6 +44,7 @@ const SideBar = () => {
 
   return (
     <aside className="hidden md:flex flex-col w-80 h-[calc(100vh-120px)] fixed left-0 top-16 bg-base-100 border-r border-base-300">
+      
       {/* Discover */}
       <div className="p-4 border-b border-base-300">
         <button className="w-full flex items-center gap-3 p-3 rounded-2xl bg-primary/10 hover:bg-primary/20 transition">
@@ -62,6 +70,8 @@ const SideBar = () => {
           <input
             type="text"
             placeholder="Search matches"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             className="input input-bordered w-full pl-9 rounded-xl"
           />
         </div>
@@ -69,7 +79,7 @@ const SideBar = () => {
 
       {/* Chats */}
       <div className="flex-1 overflow-y-auto">
-        {formattedUsers.map((u) => (
+        {filteredUsers.map((u) => (
           <div
             key={u.id}
             onClick={() => handleChats(u.id)}
