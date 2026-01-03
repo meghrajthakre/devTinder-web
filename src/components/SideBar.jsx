@@ -36,6 +36,8 @@ const SideBar = () => {
       );
 
       disptach(setChats(res.data));
+      console.log("Chat accessed:", res.data);
+
       navigate(`/chat/access/${res.data._id}`);
     } catch (error) {
       console.error("Chat access error:", error.response?.data || error.message);

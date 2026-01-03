@@ -11,9 +11,12 @@ import { socket } from "./utils/socket";
 
 const AllChats = () => {
   const users = useSelector((store) => store.connection);
+  const currentUser = useSelector((store) => store.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  /* 🔍 Search state */
   const [search, setSearch] = useState("");
 
   /* 🔹 Format users */
@@ -47,7 +50,7 @@ const AllChats = () => {
     }
   };
 
-
+ 
 
   return (
     /* ❌ Desktop hide | ✅ Mobile only */

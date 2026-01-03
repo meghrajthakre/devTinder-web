@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "./utils/constant";
 import { setConnection } from "./utils/connectionSlice";
 
+
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
@@ -70,6 +71,8 @@ const App = () => {
 
     const handleNotification = ({ chatId, message }) => {
       if (String(message.sender?._id) === String(currentUser._id)) return;
+
+       // 🔥 SHUFFLE CHAT TO TOP
 
       toast.custom((t) => (
         <div
