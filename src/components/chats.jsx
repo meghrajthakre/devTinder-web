@@ -5,7 +5,20 @@ import { socket } from "../utils/socket";
 import axios from "axios";
 import { BASE_URL } from "../utils/constant";
 import Back from "./buttons/Back";
+import ChatHeader from "./ChatHeader";
 
+
+
+const formatTime = (date) => {
+  if (!date) return "";
+  return new Date(date).toLocaleTimeString("en-IN", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
+
+/* ----------------- Main Chats Component ----------------- */
 const Chats = () => {
   const messagesEndRef = useRef(null);
 
@@ -17,13 +30,12 @@ const Chats = () => {
   const chat = useSelector((store) => store.ChatUsers);
   const chatPartner = chat.users?.find((u) => u._id !== user._id);
 
-  console.log("Chat component chat:", chat);
-  /* 🔹 Sync chatPartner to local state */
+  /* Sync chatPartner to local state */
   useEffect(() => {
     setChatPartnerState(chatPartner || null);
   }, [chatPartner]);
 
-  /* 🔹 Load old messages (history) */
+  /* Load old messages */
   useEffect(() => {
     if (!chat?._id) return;
 
@@ -33,7 +45,7 @@ const Chats = () => {
       .catch(console.error);
   }, [chat?._id]);
 
-  /* ⭐ JOIN CHAT ROOM + RECEIVE MESSAGE */
+  /* Join chat room & receive real-time messages */
   useEffect(() => {
     if (!chat?._id) return;
 
@@ -53,9 +65,7 @@ const Chats = () => {
     };
   }, [chat?._id]);
 
-
-
-  /* 🔹 Real-time partner status update */
+  /* Real-time partner status update */
   useEffect(() => {
     const handleStatusUpdate = (data) => {
       if (data.userId === chatPartner?._id) {
@@ -64,18 +74,15 @@ const Chats = () => {
     };
 
     socket.on("user-status-update", handleStatusUpdate);
-
-    return () => {
-      socket.off("user-status-update", handleStatusUpdate);
-    };
+    return () => socket.off("user-status-update", handleStatusUpdate);
   }, [chatPartner?._id]);
 
-  /* 🔹 Auto scroll */
+  /* Auto-scroll messages */
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  /* 🔹 Send message */
+  /* Send message */
   const sendMessage = () => {
     if (!message.trim() || !chat?._id) return;
 
@@ -96,76 +103,14 @@ const Chats = () => {
     setMessage("");
   };
 
-  const formatLastSeen = (date) => {
-    if (!date) return "";
-
-    const lastSeen = new Date(date);
-    const now = new Date();
-
-    const isToday =
-      lastSeen.getDate() === now.getDate() &&
-      lastSeen.getMonth() === now.getMonth() &&
-      lastSeen.getFullYear() === now.getFullYear();
-
-    const isYesterday =
-      lastSeen.getDate() === now.getDate() - 1 &&
-      lastSeen.getMonth() === now.getMonth() &&
-      lastSeen.getFullYear() === now.getFullYear();
-
-    const time = lastSeen.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    if (isToday) return `Last seen today at ${time}`;
-    if (isYesterday) return `Last seen yesterday at ${time}`;
-
-    const dateStr = lastSeen.toLocaleDateString("en-US", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-    });
-
-    return `Last seen ${dateStr} at ${time}`;
-  };
-
-
-  const formatTime = (date) => {
-    if (!date) return "";
-    return new Date(date).toLocaleTimeString("en-IN", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   return (
     <div
       className="flex flex-col bg-base-100 mt-[63px]"
       style={{ height: "calc(100vh - 128px)" }}
     >
-      {/* HEADER */}
-      <div className="flex items-center gap-2 px-4 py-2 border-b bg-base-100 shadow sticky top-0 z-10">
-        <img
-          src={chatPartnerState?.photourl || "https://i.pravatar.cc/40"}
-          className="h-9 w-9 rounded-full"
-          alt="avatar"
-        />
-        <div className="flex flex-col">
-          <div className="font-semibold">
-            {chatPartnerState?.firstName} {chatPartnerState?.lastName}
-          </div>
-          <div className={`text-xs ${chatPartnerState?.isOnline ? "text-green-500" : "text-gray-500"
-            }`}>
-            {chatPartnerState?.isOnline
-              ? "Online"
-              : chatPartnerState?.lastSeen
-                ? formatLastSeen(chatPartnerState.lastSeen)
-                : ""}
-          </div>
-        </div>
-      </div>
+      <ChatHeader partner={chatPartnerState} />
 
-      {/* MESSAGES */}
+      {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4 bg-base-200">
         {messages.map((msg) => {
           const isMe = String(msg.sender?._id) === String(user._id);
@@ -173,7 +118,9 @@ const Chats = () => {
           return (
             <div
               key={msg._id}
-              className={`flex items-end gap-2 ${isMe ? "justify-end" : "justify-start"}`}
+              className={`flex items-end gap-2 ${
+                isMe ? "justify-end" : "justify-start"
+              }`}
             >
               {!isMe && (
                 <img
@@ -185,16 +132,18 @@ const Chats = () => {
 
               <div className="flex flex-col max-w-[70%]">
                 <div
-                  className={`px-4 py-2 rounded-2xl text-sm leading-relaxed shadow-sm ${isMe
-                    ? "bg-primary text-primary-content rounded-br-md"
-                    : "bg-base-100 rounded-bl-md"
-                    }`}
+                  className={`px-4 py-2 rounded-2xl text-sm leading-relaxed shadow-sm ${
+                    isMe
+                      ? "bg-primary text-primary-content rounded-br-md"
+                      : "bg-base-100 rounded-bl-md"
+                  }`}
                 >
                   {msg.content}
                 </div>
                 <span
-                  className={`mt-1 text-[10px] text-gray-500 ${isMe ? "text-right pr-1" : "text-left pl-1"
-                    }`}
+                  className={`mt-1 text-[10px] text-gray-500 ${
+                    isMe ? "text-right pr-1" : "text-left pl-1"
+                  }`}
                 >
                   {formatTime(msg.createdAt)}
                 </span>
@@ -214,7 +163,7 @@ const Chats = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* INPUT */}
+      {/* Input */}
       <div className="flex gap-2 p-3 border-t">
         <input
           autoFocus
