@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import axios from "axios";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 import Body from "./components/Body";
 import Profile from "./components/Profile";
@@ -22,7 +22,7 @@ import { setConnection } from "./utils/connectionSlice";
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
-
+  const currentUser = useSelector((store) => store.user);
 
 
   const handleConnections = async () => {
@@ -63,6 +63,59 @@ const App = () => {
       console.log("❌ Socket disconnected");
     };
   }, [user?._id]);
+
+  /* 🔔 SOCKET: New message notification */
+  useEffect(() => {
+    if (!currentUser?._id) return;
+
+    const handleNotification = ({ chatId, message }) => {
+      if (String(message.sender?._id) === String(currentUser._id)) return;
+
+      toast.custom((t) => (
+        <div
+          className={`
+      bg-base-100 border border-base-300
+      rounded-2xl shadow-xl
+      p-4 flex gap-3 items-start
+      max-w-sm
+      ${t.visible ? "animate-enter" : "animate-leave"}
+    `}
+        >
+          {/* Avatar */}
+          <div className="relative">
+            <img
+              src={message.sender.photourl || "https://i.pravatar.cc/40"}
+              alt={message.sender.firstName}
+              className="w-11 h-11 rounded-full object-cover ring-2 ring-primary/40"
+            />
+          </div>
+
+          {/* Content */}
+          <div className="flex-1 max-w-[70%]">
+            <p className="font-semibold text-sm text-base-content">
+              {message.sender.firstName}
+            </p>
+            <p className="text-sm text-base-content/70 line-clamp-2">
+              {message.content}
+            </p>
+          </div>
+
+          {/* Accent */}
+          <span className="text-primary text-lg leading-none">❤</span>
+        </div>
+      ), {
+        duration: 4500,
+      });
+
+    };
+
+    socket.on("new-message-notification", handleNotification);
+
+    return () => {
+      socket.off("new-message-notification", handleNotification);
+    };
+  }, [currentUser?._id]);
+
 
   return (
     <>

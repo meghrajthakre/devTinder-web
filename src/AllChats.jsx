@@ -11,12 +11,9 @@ import { socket } from "./utils/socket";
 
 const AllChats = () => {
   const users = useSelector((store) => store.connection);
-  const currentUser = useSelector((store) => store.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  /* 🔍 Search state */
   const [search, setSearch] = useState("");
 
   /* 🔹 Format users */
@@ -50,25 +47,7 @@ const AllChats = () => {
     }
   };
 
-  /* 🔔 SOCKET: New message notification */
-  useEffect(() => {
-    if (!currentUser?._id) return;
 
-    const handleNotification = ({ chatId, message }) => {
-      if (String(message.sender?._id) === String(currentUser._id)) return;
-
-      toast.success(`${message.sender.firstName}: ${message.content}`, {
-        icon: "💬",
-        duration: 3000,
-      });
-    };
-
-    socket.on("new-message-notification", handleNotification);
-
-    return () => {
-      socket.off("new-message-notification", handleNotification);
-    };
-  }, [currentUser?._id]);
 
   return (
     /* ❌ Desktop hide | ✅ Mobile only */
