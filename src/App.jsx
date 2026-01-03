@@ -18,6 +18,7 @@ import AllChats from "./AllChats";
 import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "./utils/constant";
 import { setConnection } from "./utils/connectionSlice";
+import DevProfile from "./components/DevProfile";
 
 
 const App = () => {
@@ -133,6 +134,7 @@ const App = () => {
           <Route path="requests" element={<RequestsPage />} />
           <Route path="chat/access/:chatId" element={<Chats />} />
           <Route path="chats" element={<AllChats />} />
+          <Route path="/profile/:id" element={<DevProfile />} />
 
         </Route>
 

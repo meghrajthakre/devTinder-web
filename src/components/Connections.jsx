@@ -3,10 +3,12 @@ import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { setConnection } from "../utils/connectionSlice";
+import { useNavigate } from "react-router-dom";
 
 const Connections = () => {
   const dispatch = useDispatch();
   const connections = useSelector((store) => store.connection);
+  const navigate = useNavigate();
 
   const handleConnections = async () => {
     try {
@@ -24,9 +26,17 @@ const Connections = () => {
     handleConnections();
   }, []);
 
+  const handleProfile = async (id) => {
+    try {
+      navigate(`/profile/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (connections.length === 0) {
     return (
-       <div className="mt-[100px] text-center px-4">
+      <div className="mt-[100px] text-center px-4">
         <h2 className="text-xl font-semibold">No connections</h2>
         <p className="text-gray-400 mt-1">
           You don’t have any connection  yet
@@ -96,7 +106,7 @@ const Connections = () => {
 
                 {/* Actions */}
                 <div className="card-actions justify-center gap-2 mt-4">
-                  <button className="btn btn-sm btn-primary btn-outline">
+                  <button className="btn btn-sm btn-primary btn-outline" onClick={() => handleProfile(_id)}>
                     Profile
                   </button>
                   <button className="btn btn-sm btn-ghost text-error">
