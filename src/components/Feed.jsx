@@ -64,7 +64,9 @@ const Feed = () => {
   }
 
   return (
-    <div className="flex items-center justify-center mt-25">
+    <div className="flex justify-center items-center
+                  min-h-[calc(100vh-10px)]
+                  px-4">
       <SwipeStack feed={feed} onSwipe={handleSwipe} />
     </div>
   );
