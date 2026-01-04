@@ -46,11 +46,11 @@ const Connections = () => {
   }
 
   return (
-    <div className="mt-[70px] min-h-screen px-4">
+    <div className="mt-[70px] min-h-screen px-4 md:px-8 lg:px-16 pt-6">
       <h2 className="text-2xl font-semibold mb-6">Your Connections</h2>
 
       {/* tighter grid */}
-      <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(260px,1fr))] pb-30 md:pb-0">
+      <div className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(260px,1fr))] pb-30 md:pb-20">
         {connections.map((user) => {
           const {
             _id,
