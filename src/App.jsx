@@ -10,7 +10,7 @@ import Feed from "./components/Feed";
 import EditePage from "./components/EditePage";
 import Connections from "./components/Connections";
 import RequestsPage from "./components/RequestsPage";
-import SignUpPage from "./components/SignUpPage";
+import SignUpPage from "./components/singupForm/SignUpPage";
 import Chats from "./components/chats";
 
 import { socket } from "./utils/socket";
