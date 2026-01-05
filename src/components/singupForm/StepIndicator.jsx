@@ -1,7 +1,7 @@
 import React from 'react'
 const StepIndicator = ({ step }) => {
     return (
-        <div className="flex items-center justify-center gap-4 mb-6">
+        <div className="flex items-center justify-center gap-4 mb-6 mx-auto">
             {[1, 2, 3, 4].map((num) => (
                 <div key={num} className="flex items-center gap-2">
                     <div

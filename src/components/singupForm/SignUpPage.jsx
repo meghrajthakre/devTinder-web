@@ -31,8 +31,8 @@ const SignUpPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-base-200 px-4">
       <div className="absolute top-6 left-6"><Back /></div>
 
-      <div className="w-full max-w-md bg-base-100 rounded-3xl p-8 shadow-xl">
-        <h2 className="text-2xl font-semibold text-center text-primary">
+      <div className="w-full max-w-md bg-base-100 rounded-3xl p-15 shadow-xl">
+        <h2 className="text-2xl font-semibold text-center text-primary flex items-center justify-center mb-8">
           devTinder Sign Up
         </h2>
 
