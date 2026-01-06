@@ -21,7 +21,10 @@ export const useSignupForm = () => {
     interests: "",
     about: "",
     photourl: "",
-    location: { city: "", country: "" },
+    location: {
+      city: "",
+      country: "",
+    },
   });
 
   const handleChange = (e) => {
@@ -29,12 +32,18 @@ export const useSignupForm = () => {
 
     if (name.startsWith("location.")) {
       const key = name.split(".")[1];
-      setFormData((p) => ({
-        ...p,
-        location: { ...p.location, [key]: value },
+      setFormData((prev) => ({
+        ...prev,
+        location: {
+          ...prev.location,
+          [key]: value,
+        },
       }));
     } else {
-      setFormData((p) => ({ ...p, [name]: value }));
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     }
   };
 
@@ -45,8 +54,8 @@ export const useSignupForm = () => {
     try {
       const payload = {
         ...formData,
-        skills: formData.skills.split(",").map(s => s.trim()),
-        interests: formData.interests.split(",").map(i => i.trim()),
+        skills: formData.skills.split(",").map((s) => s.trim()),
+        interests: formData.interests.split(",").map((i) => i.trim()),
       };
 
       const res = await axios.post(`${BASE_URL}/signup`, payload, {
