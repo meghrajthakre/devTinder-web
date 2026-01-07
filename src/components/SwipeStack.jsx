@@ -34,14 +34,13 @@ const Card = styled(motion.div)`
 
 const SwipeStack = ({ feed, onSwipe }) => {
   const navigate = useNavigate();
-
   const handleProfile = (id) => {
   navigate(`/profile/${id}`);
 }
 
   return (
     <Stack>
-      {feed.slice(0, 3).map((user, index) => (
+      {feed.slice(0, 10).map((user, index) => (
         <Card
           key={user._id}
           drag={index === 0 ? "x" : false}
@@ -108,7 +107,7 @@ const SwipeStack = ({ feed, onSwipe }) => {
             </h2>
 
             <p className="text-sm mt-1 opacity-90 line-clamp-2">
-              {user.bio ||
+              {user.about ||
                 "Book lover, coffee enthusiast, and part-time traveler."}
             </p>
           </div>

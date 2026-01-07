@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { MapPin } from "lucide-react";
+import React from "react";
+import { MapPin, Camera, User, Sparkles } from "lucide-react";
 
 const Step4AdditionalInfo = ({
   onBack,
@@ -7,95 +7,59 @@ const Step4AdditionalInfo = ({
   onChange,
   loading,
   error,
-   formData = {
-    skills: "",
-    interests: "",
-    about: "",
-    photourl: "",
-    location: { city: "", country: "" },
+  formData = {
   },
+
+  
+
 }) => {
-  const [locationLoading, setLocationLoading] = useState(false);
 
-  const detectLocation = async () => {
-    if (!navigator.geolocation) {
-      alert("Geolocation not supported");
-      return;
-    }
-
-    setLocationLoading(true);
-
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        try {
-          const { latitude, longitude } = position.coords;
-
-          // Example: use any reverse geocoding API
-          const res = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-          );
-          const data = await res.json();
-          console.log("Reverse geocoding data:", data);
-
-          onChange({  
-            target: {
-              name: "location.city",
-              value:
-                data.address.city ||
-                data.address.town ||
-                data.address.village ||
-                "",
-            },
-          });
-
-          onChange({
-            target: {
-              name: "location.country",
-              value: data.address.country || "",
-            },
-          });
-        } catch (err) {
-          console.error("Location error", err);
-        } finally {
-          setLocationLoading(false);
-        }
-      },
-      () => {
-        alert("Unable to fetch location");
-        setLocationLoading(false);
-      }
-    );
-  };
+  const {
+    skills = "",
+    interests = "",
+    about = "",
+    photourl = "",
+    location = { city: "", country: "" },
+  } = formData;
 
   return (
-    <div className="flex flex-col gap-4 mt-6">
-      <input
-        name="skills"
-        placeholder="Skills (React, Node)"
-        className="input input-bordered w-full"
-        value={formData.skills}
-        onChange={onChange}
-        required
-      />
+    <div className="flex flex-col gap-5 mt-6">
 
-      <input
-        name="interests"
-        placeholder="Interests"
-        className="input input-bordered w-full"
-        value={formData.interests}
-        onChange={onChange}
-        required
-      />
+      {/* Skills */}
+      <div className="relative">
+        <Sparkles className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <input
+          name="skills"
+          placeholder="Skills (React, Node, MongoDB)"
+          className="input input-bordered w-full pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
+          value={formData.skills}
+          onChange={onChange}
+          required
+        />
+      </div>
+
+      {/* Interests */}
+      <div className="relative">
+        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <input
+          name="interests"
+          placeholder="Interests (Startups, Open Source)"
+          className="input input-bordered w-full pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
+          value={formData.interests}
+          onChange={onChange}
+          required
+        />
+      </div>
 
       {/* Location */}
-      <div className="flex gap-2 items-center">
-        <div className="relative flex-1">
+      <div className="grid grid-cols-2 gap-3">
+        <div className="relative">
           <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input
             name="location.city"
             placeholder="City"
-            className="input input-bordered w-full pl-10"
-            value={formData.location?.city || ""}
+            className="input input-bordered w-full pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
+            value={location?.city || ""}
             onChange={onChange}
             required
           />
@@ -104,44 +68,46 @@ const Step4AdditionalInfo = ({
         <input
           name="location.country"
           placeholder="Country"
-          className="input input-bordered w-full"
-          value={formData.location?.country || ""}
+          className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary"
+          value={location?.country || ""}
           onChange={onChange}
           required
         />
-
-        <button
-          type="button"
-          onClick={detectLocation}
-          disabled={locationLoading}
-          className="btn btn-ghost"
-          title="Detect location"
-        >
-          {locationLoading ? "..." : "📍"}
-        </button>
       </div>
 
-      <input
-        name="photourl"
-        placeholder="Profile Photo URL"
-        className="input input-bordered w-full"
-        value={formData.photourl}
-        onChange={onChange}
-        required
-      />
+      {/* Photo URL */}
+      <div className="relative">
+        <Camera className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <input
+          name="photourl"
+          placeholder="Profile photo URL"
+          className="input input-bordered w-full pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
+          value={formData.photourl}
+          onChange={onChange}
+          required
+        />
+      </div>
 
+      {/* About */}
       <textarea
         name="about"
-        placeholder="About you"
-        className="textarea textarea-bordered w-full"
+        placeholder="Tell us about yourself..."
+        rows={4}
+        className="textarea textarea-bordered w-full resize-none focus:outline-none focus:ring-2 focus:ring-primary"
         value={formData.about}
         onChange={onChange}
         required
       />
 
-      {error && <p className="text-error text-sm">{error}</p>}
+      {/* Error */}
+      {error && (
+        <p className="text-error text-sm bg-error/10 p-2 rounded">
+          {error}
+        </p>
+      )}
 
-      <div className="flex gap-2">
+      {/* Actions */}
+      <div className="flex gap-3 pt-2">
         <button onClick={onBack} className="btn btn-ghost w-1/2">
           Back
         </button>

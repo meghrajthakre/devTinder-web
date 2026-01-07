@@ -27,25 +27,28 @@ export const useSignupForm = () => {
     },
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+const handleChange = (e) => {
+  const { name, value } = e.target;
 
-    if (name.startsWith("location.")) {
-      const key = name.split(".")[1];
-      setFormData((prev) => ({
-        ...prev,
-        location: {
-          ...prev.location,
-          [key]: value,
-        },
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
-  };
+  // ✅ Handle nested location fields
+  if (name.startsWith("location.")) {
+    const field = name.split(".")[1];
+    setFormData((prev) => ({
+      ...prev,
+      location: {
+        ...prev.location,
+        [field]: value,
+      },
+    }));
+    return;
+  }
+
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
+
 
   const submitSignup = async () => {
     setLoading(true);
