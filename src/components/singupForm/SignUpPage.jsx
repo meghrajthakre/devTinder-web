@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -16,10 +15,7 @@ const SignUpPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {
-    step, setStep, loading, error,
-    handleChange, submitSignup
-  } = useSignupForm();
+  const { step, setStep, loading, error, formData, handleChange, submitSignup } = useSignupForm();
 
   const handleSubmit = async () => {
     const data = await submitSignup();
@@ -38,17 +34,20 @@ const SignUpPage = () => {
 
         <StepIndicator step={step} />
 
-        <div className="space-y-4 ">
+        <div className="space-y-4">
           {step === 1 && <Step1BasicInfo onNext={() => setStep(2)} onChange={handleChange} />}
           {step === 2 && <Step2AuthInfo onNext={() => setStep(3)} onBack={() => setStep(1)} onChange={handleChange} />}
           {step === 3 && <Step3ProfileInfo onNext={() => setStep(4)} onBack={() => setStep(2)} onChange={handleChange} />}
-          {step === 4 && <Step4AdditionalInfo
-            onBack={() => setStep(3)}
-            onSubmit={handleSubmit}
-            onChange={handleChange}
-            loading={loading}
-            error={error}
-          />}
+          {step === 4 && (
+            <Step4AdditionalInfo
+              onBack={() => setStep(3)}
+              onSubmit={handleSubmit}
+              onChange={handleChange}
+              loading={loading}
+              error={error}
+              formData={formData}
+            />
+          )}
         </div>
       </div>
     </div>

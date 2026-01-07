@@ -1,19 +1,7 @@
 import React from "react";
 import { MapPin, Camera, User, Sparkles } from "lucide-react";
 
-const Step4AdditionalInfo = ({
-  onBack,
-  onSubmit,
-  onChange,
-  loading,
-  error,
-  formData = {
-  },
-
-  
-
-}) => {
-
+const Step4AdditionalInfo = ({ onBack, onSubmit, onChange, loading, error, formData }) => {
   const {
     skills = "",
     interests = "",
@@ -24,7 +12,6 @@ const Step4AdditionalInfo = ({
 
   return (
     <div className="flex flex-col gap-5 mt-6">
-
       {/* Skills */}
       <div className="relative">
         <Sparkles className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -32,7 +19,7 @@ const Step4AdditionalInfo = ({
           name="skills"
           placeholder="Skills (React, Node, MongoDB)"
           className="input input-bordered w-full pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
-          value={formData.skills}
+          value={skills}
           onChange={onChange}
           required
         />
@@ -45,7 +32,7 @@ const Step4AdditionalInfo = ({
           name="interests"
           placeholder="Interests (Startups, Open Source)"
           className="input input-bordered w-full pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
-          value={formData.interests}
+          value={interests}
           onChange={onChange}
           required
         />
@@ -59,7 +46,7 @@ const Step4AdditionalInfo = ({
             name="location.city"
             placeholder="City"
             className="input input-bordered w-full pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
-            value={location?.city || ""}
+            value={location.city || ""}
             onChange={onChange}
             required
           />
@@ -69,7 +56,7 @@ const Step4AdditionalInfo = ({
           name="location.country"
           placeholder="Country"
           className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary"
-          value={location?.country || ""}
+          value={location.country || ""}
           onChange={onChange}
           required
         />
@@ -82,7 +69,7 @@ const Step4AdditionalInfo = ({
           name="photourl"
           placeholder="Profile photo URL"
           className="input input-bordered w-full pl-10 focus:outline-none focus:ring-2 focus:ring-primary"
-          value={formData.photourl}
+          value={photourl}
           onChange={onChange}
           required
         />
@@ -94,7 +81,7 @@ const Step4AdditionalInfo = ({
         placeholder="Tell us about yourself..."
         rows={4}
         className="textarea textarea-bordered w-full resize-none focus:outline-none focus:ring-2 focus:ring-primary"
-        value={formData.about}
+        value={about}
         onChange={onChange}
         required
       />

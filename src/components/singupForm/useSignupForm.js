@@ -27,38 +27,44 @@ export const useSignupForm = () => {
     },
   });
 
-const handleChange = (e) => {
-  const { name, value } = e.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-  // ✅ Handle nested location fields
-  if (name.startsWith("location.")) {
-    const field = name.split(".")[1];
+    // Handle nested location fields
+    if (name.startsWith("location.")) {
+      const field = name.split(".")[1];
+      setFormData((prev) => ({
+        ...prev,
+        location: {
+          ...prev.location,
+          [field]: value,
+        },
+      }));
+      return;
+    }
+
     setFormData((prev) => ({
       ...prev,
-      location: {
-        ...prev.location,
-        [field]: value,
-      },
+      [name]: value,
     }));
-    return;
-  }
-
-  setFormData((prev) => ({
-    ...prev,
-    [name]: value,
-  }));
-};
-
+  };
 
   const submitSignup = async () => {
     setLoading(true);
     setError("");
 
     try {
+      // Convert skills & interests to arrays
       const payload = {
         ...formData,
-        skills: formData.skills.split(",").map((s) => s.trim()),
-        interests: formData.interests.split(",").map((i) => i.trim()),
+        skills: formData.skills
+          .split(/[\s,]+/)      // split by comma or space
+          .map(s => s.trim())   // remove extra spaces
+          .filter(Boolean),     // remove empty strings
+        interests: formData.interests
+          .split(/[\s,]+/)
+          .map(i => i.trim())
+          .filter(Boolean),
       };
 
       const res = await axios.post(`${BASE_URL}/signup`, payload, {

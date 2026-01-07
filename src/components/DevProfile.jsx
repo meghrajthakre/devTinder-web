@@ -12,6 +12,7 @@ const DevProfile = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showConfirm, setShowConfirm] = useState(false);
+    
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -103,7 +104,7 @@ const DevProfile = () => {
 
                         {/* DETAILS */}
                         <div className="p-5 md:p-8 flex flex-col gap-4">
-                           
+
                             <div className="hidden md:block">
                                 <h2 className="text-2xl font-semibold">
                                     {user.firstName} {user.lastName}
@@ -135,18 +136,26 @@ const DevProfile = () => {
                                     Skills
                                 </h3>
                                 <div className="flex flex-wrap gap-2">
-                                    {user.skills?.length ? (
-                                        user.skills.map((skill, i) => (
-                                            <span key={i} className="badge badge-outline">
-                                                {skill}
-                                            </span>
-                                        ))
+                                    {Array.isArray(user.skills) && user.skills.length > 0 ? (
+                                        user.skills
+                                            .flatMap(skillGroup =>
+                                                skillGroup
+                                                    .split(",")
+                                                    .map(skill => skill.trim())
+                                                    .filter(Boolean)
+                                            )
+                                            .map((skill, i) => (
+                                                <span key={i} className="badge badge-outline">
+                                                    {skill}
+                                                </span>
+                                            ))
                                     ) : (
                                         <span className="text-xs text-gray-400">
                                             No skills added
                                         </span>
                                     )}
                                 </div>
+
                             </div>
 
                             <p className="text-xs text-gray-400 mt-auto">
