@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BASE_URL } from "./utils/constant";
 import { setConnection } from "./utils/connectionSlice";
 import DevProfile from "./components/DevProfile";
+import FeedProfile from "./components/FeedProfile";
 
 
 const App = () => {
@@ -135,6 +136,7 @@ const App = () => {
           <Route path="chat/access/:chatId" element={<Chats />} />
           <Route path="chats" element={<AllChats />} />
           <Route path="/profile/:id" element={<DevProfile />} />
+          <Route path="/Feed/profile/:id" element={<FeedProfile />} />
 
         </Route>
 

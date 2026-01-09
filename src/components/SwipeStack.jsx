@@ -35,8 +35,8 @@ const Card = styled(motion.div)`
 const SwipeStack = ({ feed, onSwipe }) => {
   const navigate = useNavigate();
   const handleProfile = (id) => {
-  navigate(`/profile/${id}`);
-}
+    navigate(`/Feed/profile/${id}`);
+  }
 
   return (
     <Stack>
@@ -70,7 +70,11 @@ const SwipeStack = ({ feed, onSwipe }) => {
             <button />
             <div className="flex items-center gap-1 px-3 py-1 text-sm bg-white/90 rounded-full backdrop-blur">
               <MapPin size={14} />
-              <span>{user.location || "Los Angeles, CA"}</span>
+              <span>
+                {user.location?.city
+                  ? `${user.location.city}, ${user.location.country}`
+                  : "Location not available"}
+              </span>
             </div>
           </div>
 
