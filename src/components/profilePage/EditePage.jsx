@@ -19,7 +19,7 @@ const EditProfile = () => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState(null);
   const [photos, setPhotos] = useState([]);
 
   const [formData, setFormData] = useState({
@@ -70,7 +70,6 @@ const EditProfile = () => {
     (photo ? 1 : 0) +
     (photos.length ? 1 : 0);
 
-  const progress = Math.min(100, Math.round((filledCount / 18) * 100));
 
   /* ===== SUBMIT ===== */
   const handleSubmit = async () => {
