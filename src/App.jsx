@@ -7,7 +7,7 @@ import Body from "./components/Body";
 import Profile from "./components/Profile";
 import Login from "./components/Login";
 import Feed from "./components/Feed";
-import EditePage from "./components/EditePage";
+import EditePage from "./components/profilePage/EditePage";
 import Connections from "./components/Connections";
 import RequestsPage from "./components/RequestsPage";
 import SignUpPage from "./components/singupForm/SignUpPage";

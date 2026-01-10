@@ -82,10 +82,9 @@ const SwipeStack = ({ feed, onSwipe }) => {
           <div className="absolute right-3 bottom-32 flex flex-col gap-4">
             <IconWrap
               tooltip="Like"
-              glow="#ff4d6d"
               onClick={() => onSwipe(user, "interested")}
             >
-              <Heart fill="currentColor" />
+              <Heart fill="" />
             </IconWrap>
 
             <IconWrap tooltip="View Profile" onClick={() => handleProfile(user._id)}>
