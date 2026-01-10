@@ -24,7 +24,7 @@ const Profile = () => {
         user.photos?.length > 0 ? user.photos : [user.photourl];
 
     return (
-        <div className="min-h-screen bg-base-200 mt-[75px] pb-28">
+        <div className="min-h-screen bg-base-200 mt-[72px] py-6 pb-20">
             <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
 
                 {/* LEFT SIDEBAR */}
@@ -37,7 +37,7 @@ const Profile = () => {
                         </div>
 
                         <div>
-                            <h2 className="text-lg font-semibold">
+                            <h2 className="text-lg font-semibold text-primary">
                                 {user.firstName} {user.lastName}
                             </h2>
                             <p className="text-sm opacity-70">{user.currentRole}</p>
@@ -50,7 +50,7 @@ const Profile = () => {
                             {locationText}
                         </div>
                         <div className="mt-2">
-                            <h3 className="font-semibold mb-2">experience</h3>
+                            <h3 className="font-semibold mb-2 text-primary">experience</h3>
                             <p className="text-sm opacity-80 leading-relaxed">
                                 <p>{user.experienceLevel}</p>
 
@@ -58,7 +58,7 @@ const Profile = () => {
                         </div>
 
                         <div className="mt-2">
-                            <h3 className="font-semibold mb-2">About</h3>
+                            <h3 className="font-semibold mb-2 text-primary">About</h3>
                             <p className="text-sm opacity-80 leading-relaxed">
                                 {user.about ||
                                     "Focused on improving problem-solving skills and building scalable applications."}
@@ -68,13 +68,13 @@ const Profile = () => {
 
                     <button
                         onClick={() => navigate("/profileEdit")}
-                        className="btn btn-outline btn-sm w-full gap-2"
+                        className="btn btn-outline btn-sm w-full gap-2 "
                     >
                         <Edit3 size={14} /> Edit Profile
                     </button>
 
                     {/* LINKS */}
-                    <div className="pt-2 space-y-2">
+                    <div className="pt-2 space-y-2 text-primary">
                         {user.githubProfileUrl && (
                             <a
                                 href={user.githubProfileUrl}
@@ -110,7 +110,7 @@ const Profile = () => {
 
                     {/* PHOTOS */}
                     <div className="bg-base-100 rounded-xl shadow p-6">
-                        <h3 className="font-semibold mb-3">Photos</h3>
+                        <h3 className="font-semibold text-primary mb-3">Photos</h3>
                         <div className="flex gap-3 overflow-x-auto">
                             {photos.map((img, i) => (
                                 <img
@@ -126,7 +126,7 @@ const Profile = () => {
                     {/* SKILLS */}
                     {user.skills?.length > 0 && (
                         <div className="bg-base-100 rounded-xl shadow p-6">
-                            <h3 className="font-semibold mb-3">Skills</h3>
+                            <h3 className="font-semibold text-primary mb-3">Skills</h3>
                             <div className="flex flex-wrap gap-2">
                                 {user.skills.map((skill, i) => (
                                     <span
@@ -143,12 +143,12 @@ const Profile = () => {
                     {/* TECH STACK */}
                     {user.preferredTechStack?.length > 0 && (
                         <div className="bg-base-100 rounded-xl shadow p-6">
-                            <h3 className="font-semibold mb-3">Tech Stack</h3>
+                            <h3 className="font-semibold mb-3 text-primary">Tech Stack</h3>
                             <div className="flex flex-wrap gap-2">
                                 {user.preferredTechStack.map((tech, i) => (
                                     <span
                                         key={i}
-                                        className="px-3 py-1 text-xs rounded-md bg-primary/10 text-primary"
+                                        className="px-3 py-1 text-xs rounded-md bg-primary/10 "
                                     >
                                         {tech}
                                     </span>

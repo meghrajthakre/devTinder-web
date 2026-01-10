@@ -4,7 +4,7 @@ const StepProfileInfo = ({ formData, setFormData, photo, setPhoto, onNext }) => 
   const fileRef = useRef(null);
 
   return (
-    <div className="min-h-[calc(100vh-140px)] flex items-center justify-center px-4 pb-8">
+    <div className="flex items-center justify-center px-4 pb-20">
       {/* CARD */}
       <div className="bg-base-100 rounded-xl shadow w-full max-w-3xl p-6 md:p-8 space-y-6">
         
