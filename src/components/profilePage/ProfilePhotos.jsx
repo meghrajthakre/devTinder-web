@@ -13,7 +13,8 @@ const ProfilePhotos = ({ user }) => {
 
   return (
     <>
-      <div className="bg-base-100 rounded-xl border border-base-300 p-5">
+  <div className="bg-base-100 rounded-xl border border-base-300 p-5 max-h-[520px] overflow-y-auto">
+
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-semibold text-lg">Photos</h3>

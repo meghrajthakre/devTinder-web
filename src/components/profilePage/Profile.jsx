@@ -61,7 +61,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 mt-[72px] py-6 pb-20">
+    <div className=" bg-base-200 pt-22 py-6 pb-20">
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
 
         <ProfileSidebar
@@ -75,7 +75,6 @@ const Profile = () => {
 
         <div className="md:col-span-2 space-y-6">
           <ProfilePhotos user={user} />
-          <ProfileSkills user={user} />
         </div>
 
       </div>

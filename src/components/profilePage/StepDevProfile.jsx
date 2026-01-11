@@ -3,7 +3,7 @@ import React from "react";
 const StepDevProfile = ({ formData, setFormData, onBack, onSubmit, loading }) => {
   return (
     <div className="flex items-center justify-center  pb-20">
-      <div className="bg-base-100 w-full max-w-4xl rounded-2xl shadow p-6 md:p-8 space-y-6">
+      <div className="bg-base-100 rounded-xl shadow w-full max-w-4xl p-6 md:p-8 max-h-[520px] overflow-y-auto scrollbar-thin scrollbar-thumb-base-300 space-y-6">
 
         <h2 className="text-2xl font-semibold text-center">
           Developer Profile

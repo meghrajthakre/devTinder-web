@@ -107,7 +107,7 @@ const EditProfile = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-base-200 px-4  mt-[80px] ">
+    <div className="min-h-screen bg-base-200 px-4 pt-22 ">
       <div className=" mx-auto">
 
 
