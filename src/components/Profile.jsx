@@ -1,25 +1,30 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, use } from "react";
 import {
   MapPin,
   Github,
   Linkedin,
   Link as LinkIcon,
   Edit3,
+  Loader2,
 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { addUser } from "../utils/userSlice";
 
 const Profile = () => {
   const user = useSelector((store) => store.user);
+  const dispatch = useDispatch();
   const [photo, setPhoto] = useState("/avatar.png");
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (user?.photourl) {
       setPhoto(user.photourl);
     }
   }, [user]);
-  const fileRef = useRef(null);
-  const navigate = useNavigate();
 
   if (!user) return <p className="text-center mt-20">Loading...</p>;
 
@@ -54,7 +59,48 @@ const Profile = () => {
       }${user.location?.country || ""}`
       : "India";
 
-  // ===================================================
+  // ================= HANDLER =================
+  const handlePhotoChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const validTypes = ["image/jpeg", "image/png"];
+    if (!validTypes.includes(file.type)) {
+      toast.error("Only JPG and PNG files are allowed");
+      return;
+    }
+
+    setUploading(true);
+    const form = new FormData();
+    form.append("photo", file);
+
+    try {
+      const res = await fetch(
+        "http://localhost:3001/profile/profilePicture",
+        {
+          method: "POST",
+          credentials: "include",
+          body: form,
+        }
+      );
+
+      const data = await res.json();
+      if (!data.success) throw new Error("Upload failed");
+
+      const cloudinaryUrl = data.photourl;
+      setPhoto(cloudinaryUrl);
+      dispatch(addUser({ ...user, photourl: cloudinaryUrl }));
+      toast.success("Profile photo updated");
+    } catch {
+      toast.error("Upload failed");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+
+
+  // ================= UI =================   
 
   return (
     <div className="min-h-screen bg-base-200 mt-[72px] py-6 pb-20">
@@ -63,60 +109,40 @@ const Profile = () => {
         <div className="bg-base-100 rounded-xl shadow p-6 space-y-4 h-fit">
           <div className="flex items-center gap-4">
             <div className="avatar">
-                <div className="w-28 h-28 mx-auto p-2">
-                  <div
-                    className="w-full h-full rounded-full ring-primary/30  ring-1  shadow-md cursor-pointer overflow-hidden group relative"
-                    onClick={() => fileRef.current.click()}
-                  >
-                    <img
-                      src={photo || "/avatar.png"}
-                      alt="profile"
-                      className="w-full h-full rounded-full object-cover object-center p-1"
-                    />
+              <div className="w-28 h-28 mx-auto p-2 relative">
+                <div
+                  className="w-full h-full rounded-full ring-primary/30 ring-1 shadow-md cursor-pointer overflow-hidden group relative"
+                  onClick={() => !uploading && fileRef.current.click()}
+                >
+                  <img
+                    src={photo || "/avatar.png"}
+                    alt="profile"
+                    className="w-full h-full rounded-full object-cover object-center p-1"
+                  />
 
+                  {/* Overlay on hover */}
+                  {!uploading && (
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-xs opacity-0 group-hover:opacity-100 transition">
                       Change
                     </div>
+                  )}
+
+                  {/* Spinner overlay */}
+                  {uploading && (
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-sm">
+                      <Loader2 className="animate-spin mr-2" size={18} /> Uploading
+                    </div>
+                  )}
                 </div>
 
                 <input
                   ref={fileRef}
                   type="file"
                   hidden
-                  accept="image/*"
-                  onChange={async (e) => {
-                    const file = e.target.files[0];
-                    if (!file) return;
-
-                    const form = new FormData();
-                    form.append("photo", file);
-
-                    try {
-                      const res = await fetch(
-                        "http://localhost:3001/profile/profilePicture",
-                        {
-                          method: "POST",
-                          credentials: "include",
-                          body: form,
-                        }
-                      );
-
-                      const data = await res.json();
-
-                      if (!data.success) throw new Error("Upload failed");
-
-                      // ✅ correct response key
-                      const cloudinaryUrl = data.profilePicture;
-
-                      setPhoto(cloudinaryUrl);
-                      toast.success("Profile photo updated");
-                    } catch {
-                      toast.error("Upload failed");
-                    }
-                  }}
+                  accept="image/png, image/jpeg"
+                  onChange={handlePhotoChange}
                 />
               </div>
-
             </div>
 
             <div>
@@ -134,7 +160,7 @@ const Profile = () => {
             </div>
 
             <div className="mt-2">
-              <h3 className="font-semibold mb-2 text-primary">experience</h3>
+              <h3 className="font-semibold mb-2 text-primary">Experience</h3>
               <p className="text-sm opacity-80 leading-relaxed">
                 {user.experienceLevel || "Not specified"}
               </p>
@@ -148,7 +174,7 @@ const Profile = () => {
 
           <button
             onClick={() => navigate("/profileEdit")}
-            className="btn btn-outline btn-sm w-full gap-2 "
+            className="btn btn-outline btn-sm w-full gap-2"
           >
             <Edit3 size={14} /> Edit Profile
           </button>
@@ -227,7 +253,7 @@ const Profile = () => {
               {preferredTechStack.map((tech, i) => (
                 <span
                   key={i}
-                  className="px-3 py-1 text-xs rounded-md bg-primary/10 "
+                  className="px-3 py-1 text-xs rounded-md bg-primary/10"
                 >
                   {tech}
                 </span>
