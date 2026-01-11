@@ -66,7 +66,7 @@ const StepPhotos = ({ photos, setPhotos, onNext, onBack }) => {
 
   /* ================= UI ================= */
   return (
-    <div className="min-h-[calc(100vh-140px)] flex items-center justify-center px-4">
+    <div className="min-h-[calc(100vh-140px)] flex items-center justify-center px-4 mb-6 pb-20">
       <div className="bg-base-100 w-full max-w-4xl rounded-2xl shadow p-6 md:p-8 space-y-6">
 
         <h2 className="text-xl font-semibold text-center">

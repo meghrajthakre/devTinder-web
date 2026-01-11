@@ -64,11 +64,7 @@ const EditProfile = () => {
     setPhotos(user.photos || []);
   }, [user]);
 
-  /* ===== PROFILE COMPLETION % ===== */
-  const filledCount =
-    Object.values(formData).filter(Boolean).length +
-    (photo ? 1 : 0) +
-    (photos.length ? 1 : 0);
+
 
 
   /* ===== SUBMIT ===== */
@@ -81,21 +77,22 @@ const EditProfile = () => {
           ...formData,
           skills: formData.skills.split(",").map((s) => s.trim()),
           interests: formData.interests.split(",").map((i) => i.trim()),
-          preferredTechStack: formData.preferredTechStack
-            .split(",")
-            .map((t) => t.trim()),
+          preferredTechStack: formData.preferredTechStack.split(",").map((t) => t.trim()),
           photourl: photo,
           photos,
+          location: {
+            city: formData.city,
+            country: formData.country,
+          },
           matchPreferences: {
             skills: formData.matchSkills.split(",").map((s) => s.trim()),
-            experienceLevel: formData.matchExperience
-              .split(",")
-              .map((e) => e.trim()),
+            experienceLevel: formData.matchExperience.split(",").map((e) => e.trim()),
             locationPreference: formData.locationPreference,
           },
         },
         { withCredentials: true }
       );
+
 
       dispatch(addUser(res.data.user));
       toast.success("Profile updated");
