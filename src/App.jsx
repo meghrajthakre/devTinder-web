@@ -4,7 +4,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 
 import Body from "./components/Body";
-import Profile from "./components/Profile";
+import Profile from "./components/profilePage/Profile";
 import Login from "./components/Login";
 import Feed from "./components/Feed";
 import EditePage from "./components/profilePage/EditePage";
