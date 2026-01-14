@@ -9,6 +9,7 @@ import Theme from "./theme/Theme";
 import { MapPin } from "lucide-react";
 import { clearConnections } from "../utils/connectionSlice";
 import { socket } from "../utils/socket";
+import logo from '../../public/assets/logo.png';
 
 
 const Navbar = () => {
@@ -59,7 +60,7 @@ const Navbar = () => {
       {/* LEFT */}
       <div className="flex items-center gap-3">
         <img
-          src="/assets/logo.png"
+          src={logo}
           className="w-10 h-10"
           alt="DevTinder Logo"
         />
