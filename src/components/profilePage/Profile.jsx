@@ -8,6 +8,7 @@ import ProfileSidebar from "./ProfileSidebar";
 import ProfilePhotos from "./ProfilePhotos";
 import ProfileSkills from "./ProfileSkills";
 import ProfileTechStack from "./ProfileTechStack";
+import { BASE_URL } from '../../../src/utils/constant';
 
 const Profile = () => {
   const user = useSelector((store) => store.user);
@@ -41,7 +42,7 @@ const Profile = () => {
     form.append("photo", file);
 
     try {
-      const res = await fetch("http://localhost:3001/profile/profilePicture", {
+      const res = await fetch(`${BASE_URL}/profile/profilePicture`, {
         method: "POST",
         credentials: "include",
         body: form,
