@@ -9,6 +9,7 @@ import ProfilePhotos from "./ProfilePhotos";
 import ProfileSkills from "./ProfileSkills";
 import ProfileTechStack from "./ProfileTechStack";
 import { BASE_URL } from '../../../src/utils/constant';
+import axios from "axios";
 
 const Profile = () => {
   const user = useSelector((store) => store.user);
@@ -42,13 +43,11 @@ const Profile = () => {
     form.append("photo", file);
 
     try {
-      const res = await fetch(`${BASE_URL}/profile/profilePicture`, {
-        method: "POST",
+      const res = await axios.post(`${BASE_URL}/profile/profilePicture`, form, {
         credentials: "include",
-        body: form,
       });
 
-      const data = await res.json();
+      const data = await res.data;
       if (!data.success) throw new Error();
 
       setPhoto(data.photourl);
