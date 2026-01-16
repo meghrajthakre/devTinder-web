@@ -27,7 +27,7 @@ const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const currentUser = useSelector((store) => store.user);
-
+console.log('app is running');
 
   const handleConnections = async () => {
     try {
