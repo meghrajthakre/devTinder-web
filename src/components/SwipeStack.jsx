@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 
+
 /* Stack */
 const Stack = styled.div`
   position: relative;
@@ -34,6 +35,11 @@ const Card = styled(motion.div)`
 
 const SwipeStack = ({ feed, onSwipe }) => {
   const navigate = useNavigate();
+
+  const handleMessagePremium = () => {
+    navigate('/membership');
+  }
+
   const handleProfile = (id) => {
     navigate(`/Feed/profile/${id}`);
   }
@@ -91,7 +97,7 @@ const SwipeStack = ({ feed, onSwipe }) => {
               <User />
             </IconWrap>
 
-            <IconWrap tooltip="Send Message">
+            <IconWrap tooltip="Send Message" onClick={handleMessagePremium}>
               <MessageCircle />
             </IconWrap>
           </div>
