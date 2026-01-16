@@ -20,6 +20,7 @@ import { BASE_URL } from "./utils/constant";
 import { setConnection } from "./utils/connectionSlice";
 import DevProfile from "./components/DevProfile";
 import FeedProfile from "./components/FeedProfile";
+import Membership from "./components/pages/Membership";
 
 
 const App = () => {
@@ -137,6 +138,8 @@ const App = () => {
           <Route path="chats" element={<AllChats />} />
           <Route path="/profile/:id" element={<DevProfile />} />
           <Route path="/Feed/profile/:id" element={<FeedProfile />} />
+          <Route path="/membership" element={<Membership />} />
+          <Route path="*" element={<p className="text-center mt-20">404 Not Found</p>} />
 
         </Route>
 
