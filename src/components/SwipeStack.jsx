@@ -37,6 +37,7 @@ const SwipeStack = ({ feed, onSwipe }) => {
   const navigate = useNavigate();
 
   const handleMessagePremium = () => {
+    console.log("Navigate to membership page");
     navigate('/membership');
   }
 
