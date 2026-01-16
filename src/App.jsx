@@ -21,13 +21,13 @@ import { setConnection } from "./utils/connectionSlice";
 import DevProfile from "./components/DevProfile";
 import FeedProfile from "./components/FeedProfile";
 import Membership from "./components/pages/Membership";
+import Landing from "./components/landing/Landing";
 
 
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const currentUser = useSelector((store) => store.user);
-console.log('app is running');
 
   const handleConnections = async () => {
     try {
@@ -75,7 +75,7 @@ console.log('app is running');
     const handleNotification = ({ chatId, message }) => {
       if (String(message.sender?._id) === String(currentUser._id)) return;
 
-       // 🔥 SHUFFLE CHAT TO TOP
+      // 🔥 SHUFFLE CHAT TO TOP
 
       toast.custom((t) => (
         <div
@@ -127,7 +127,11 @@ console.log('app is running');
     <>
       <Toaster position="top-center" />
 
+
       <Routes>
+        {/* 🌟 Public Landing Page */}
+        <Route path="/" element={<Landing />} />
+
         <Route path="/" element={<Body />}>
           <Route path="feed" element={<Feed />} />
           <Route path="profile" element={<Profile />} />
