@@ -66,7 +66,7 @@ const Feed = () => {
   return (
     <div className="flex justify-center items-center
                   min-h-[calc(100vh-10px)]
-                  px-4">
+                  px-4 bg-gradient-to-b  from-base-100 via-base-200 to-base-100">
       <SwipeStack feed={feed} onSwipe={handleSwipe} />
     </div>
   );

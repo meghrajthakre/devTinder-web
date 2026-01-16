@@ -24,7 +24,8 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-base-200 px-4
+    bg-gradient-to-b  from-base-100 via-base-300 to-base-100">
       <div className="absolute top-6 left-6"><Back /></div>
 
       <div className="w-full max-w-md bg-base-100 rounded-3xl p-15 shadow-xl">

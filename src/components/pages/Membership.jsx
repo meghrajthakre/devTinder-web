@@ -31,7 +31,7 @@ const plans = [
 const Membership = () => {
     return (
         <div
-            className="bg-gradient-to-b mt-[64px] from-base-100 via-base-200 to-base-100 px-6 py-2 overflow-y-scroll pb-18"
+            className=" mt-[64px] bg-gradient-to-b  from-base-100 via-base-200 to-base-100 px-6 py-2 overflow-y-scroll pb-18"
             style={{ height: "calc(100vh - 70px)" }}
         >
             {/* Header */}
