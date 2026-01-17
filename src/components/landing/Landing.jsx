@@ -11,11 +11,6 @@ gsap.registerPlugin(ScrollTrigger);
 const Landing = () => {
   const heroRef = useRef(null);
   const footerRef = useRef(null);
-  const user = useSelector((store) => store.user);
-
-  if (user?._id) {
-    return <Navigate to="/feed" replace />;
-  }
 
  useEffect(() => {
 
@@ -81,7 +76,7 @@ const Landing = () => {
 
 
   return (
-    <div className="landing overflow-y-hidden">
+    <div className="landing ">
       <section ref={heroRef} className="hero-section">
         <Hero />
       </section>
