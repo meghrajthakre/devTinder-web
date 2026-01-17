@@ -130,7 +130,7 @@ const App = () => {
 
       <Routes>
         {/* 🌟 Public Landing Page */}
-        <Route path="/" element={<Landing />} />
+        {/* <Route path="/" element={<Landing />} /> */}
 
         <Route path="/" element={<Body />}>
           <Route path="feed" element={<Feed />} />
