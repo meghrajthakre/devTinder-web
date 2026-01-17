@@ -81,7 +81,7 @@ const Landing = () => {
 
 
   return (
-    <div className="landing">
+    <div className="landing overflow-y-hidden">
       <section ref={heroRef} className="hero-section">
         <Hero />
       </section>
