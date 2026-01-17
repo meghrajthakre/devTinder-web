@@ -11,79 +11,84 @@ gsap.registerPlugin(ScrollTrigger);
 const Landing = () => {
   const heroRef = useRef(null);
   const footerRef = useRef(null);
+  const user = useSelector(store => store.user);
+  console.log("LANDING USER 👉", user);
+  if (user?._id) {
+    return <Navigate to="/feed" replace />;
+  }
 
- useEffect(() => {
+  useEffect(() => {
 
-  /* ================= HERO PIN ================= */
-  ScrollTrigger.create({
-    trigger: heroRef.current,
-    start: "top top",
-    end: "+=100%",
-    pin: true,
-    pinSpacing: false,
-  });
+    /* ================= HERO PIN ================= */
+    ScrollTrigger.create({
+      trigger: heroRef.current,
+      start: "top top",
+      end: "+=100%",
+      pin: true,
+      pinSpacing: false,
+    });
 
-  /* ================= HERO ANIMATION (ON LOAD) ================= */
-  gsap.fromTo(
-    heroRef.current.querySelectorAll(
-      ".hero-nav, .hero-title, .hero-text, .hero-btn"
-    ),
-    { y: 40, opacity: 0 },
-    {
-      y: 0,
-      opacity: 1,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: "power3.out",
-    }
-  );
+    /* ================= HERO ANIMATION (ON LOAD) ================= */
+    gsap.fromTo(
+      heroRef.current.querySelectorAll(
+        ".hero-nav, .hero-title, .hero-text, .hero-btn"
+      ),
+      { y: 40, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+      }
+    );
 
-  /* ================= FOOTER WRAPPER ================= */
-  gsap.fromTo(
-    footerRef.current,
-    { y: 150, opacity: 0 },
-    {
-      y: 0,
-      opacity: 1,
-      duration: 1.2,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: footerRef.current,
-        start: "top 80%",
-      },
-    }
-  );
+    /* ================= FOOTER WRAPPER ================= */
+    gsap.fromTo(
+      footerRef.current,
+      { y: 150, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top 80%",
+        },
+      }
+    );
 
-  /* ================= FOOTER TEXT ================= */
-  gsap.fromTo(
-    footerRef.current.querySelectorAll(".fade-text"),
-    { y: 30, opacity: 0 },
-    {
-      y: 0,
-      opacity: 1,
-      duration: 0.4,
-      stagger: 0.12,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: footerRef.current,
-        start: "top 75%",
-      },
-    }
-  );
+    /* ================= FOOTER TEXT ================= */
+    gsap.fromTo(
+      footerRef.current.querySelectorAll(".fade-text"),
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.4,
+        stagger: 0.12,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top 75%",
+        },
+      }
+    );
 
-  return () => ScrollTrigger.getAll().forEach(t => t.kill());
-}, []);
+    return () => ScrollTrigger.getAll().forEach(t => t.kill());
+  }, []);
 
 
   return (
-    <div className="landing ">
-      <section ref={heroRef} className="hero-section">
+    <div className="w-full  overflow-y-hidden">
+      <div ref={heroRef} className="hero-section">
         <Hero />
-      </section>
+      </div>
 
-      <section ref={footerRef} className="footer-section">
+      <div ref={footerRef} className="footer-section">
         <PolicyFooter />
-      </section>
+      </div>
     </div>
   );
 };
