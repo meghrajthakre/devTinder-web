@@ -127,29 +127,29 @@ const App = () => {
     <>
       <Toaster position="top-center" />
 
+<Routes>
+  {/* Public routes */}
+  <Route path="/" element={<Landing />} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/signup" element={<SignUpPage />} />
 
-      <Routes>
-        {/* 🌟 Public Landing Page */}
-        <Route path="/" element={<Landing />} />
+  {/* Private routes */}
+  <Route element={<Body />}>
+    <Route path="/feed" element={<Feed />} />
+    <Route path="/profile" element={<Profile />} />
+    <Route path="/profileEdit" element={<EditePage />} />
+    <Route path="/connections" element={<Connections />} />
+    <Route path="/requests" element={<RequestsPage />} />
+    <Route path="/chat/access/:chatId" element={<Chats />} />
+    <Route path="/chats" element={<AllChats />} />
+    <Route path="/profile/:id" element={<DevProfile />} />
+    <Route path="/feed/profile/:id" element={<FeedProfile />} />
+    <Route path="/membership" element={<Membership />} />
+  </Route>
 
-        <Route path="/" element={<Body />}>
-          <Route path="feed" element={<Feed />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="profileEdit" element={<EditePage />} />
-          <Route path="connections" element={<Connections />} />
-          <Route path="requests" element={<RequestsPage />} />
-          <Route path="chat/access/:chatId" element={<Chats />} />
-          <Route path="chats" element={<AllChats />} />
-          <Route path="/profile/:id" element={<DevProfile />} />
-          <Route path="/Feed/profile/:id" element={<FeedProfile />} />
-          <Route path="/membership" element={<Membership />} />
-          <Route path="*" element={<p className="text-center mt-20">404 Not Found</p>} />
+  <Route path="*" element={<p className="text-center mt-20">404 Not Found</p>} />
+</Routes>
 
-        </Route>
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUpPage />} />
-      </Routes>
     </>
   );
 };
