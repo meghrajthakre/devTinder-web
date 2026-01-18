@@ -22,6 +22,10 @@ import DevProfile from "./components/DevProfile";
 import FeedProfile from "./components/FeedProfile";
 import Membership from "./components/pages/Membership";
 import Landing from "./components/landing/Landing";
+import Accessibility from './components/legal/Accessibility';
+import CookiePolicy from './components/legal/CookiePolicy';
+import PrivacyPolicy from './components/legal/PrivacyPolicy';
+import Terms from './components/legal/Terms';
 
 
 const App = () => {
@@ -127,28 +131,33 @@ const App = () => {
     <>
       <Toaster position="top-center" />
 
-<Routes>
-  {/* Public routes */}
-  <Route path="/" element={<Landing />} />
-  <Route path="/login" element={<Login />} />
-  <Route path="/signup" element={<SignUpPage />} />
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/cookie-policy" element={<CookiePolicy />} />
+        <Route path="/accessibility" element={<Accessibility />} />
 
-  {/* Private routes */}
-  <Route element={<Body />}>
-    <Route path="/feed" element={<Feed />} />
-    <Route path="/profile" element={<Profile />} />
-    <Route path="/profileEdit" element={<EditePage />} />
-    <Route path="/connections" element={<Connections />} />
-    <Route path="/requests" element={<RequestsPage />} />
-    <Route path="/chat/access/:chatId" element={<Chats />} />
-    <Route path="/chats" element={<AllChats />} />
-    <Route path="/profile/:id" element={<DevProfile />} />
-    <Route path="/feed/profile/:id" element={<FeedProfile />} />
-    <Route path="/membership" element={<Membership />} />
-  </Route>
+        {/* Private routes */}
+        <Route element={<Body />}>
+          <Route path="/feed" element={<Feed />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profileEdit" element={<EditePage />} />
+          <Route path="/connections" element={<Connections />} />
+          <Route path="/requests" element={<RequestsPage />} />
+          <Route path="/chat/access/:chatId" element={<Chats />} />
+          <Route path="/chats" element={<AllChats />} />
+          <Route path="/profile/:id" element={<DevProfile />} />
+          <Route path="/feed/profile/:id" element={<FeedProfile />} />
+          <Route path="/membership" element={<Membership />} />
 
-  <Route path="*" element={<p className="text-center mt-20">404 Not Found</p>} />
-</Routes>
+        </Route>
+
+        <Route path="*" element={<p className="text-center mt-20">404 Not Found</p>} />
+      </Routes>
 
     </>
   );

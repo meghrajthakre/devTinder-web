@@ -81,7 +81,7 @@ const Landing = () => {
 
 
   return (
-    <div className="w-full  overflow-y-hidden">
+    <div className="w-full min-h-screen overflow-y-hidden">
       <div ref={heroRef} className="hero-section">
         <Hero />
       </div>
