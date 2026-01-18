@@ -26,6 +26,7 @@ import Accessibility from './components/legal/Accessibility';
 import CookiePolicy from './components/legal/CookiePolicy';
 import PrivacyPolicy from './components/legal/PrivacyPolicy';
 import Terms from './components/legal/Terms';
+import Faq from "./FAQ/Faq";
 
 
 const App = () => {
@@ -140,6 +141,7 @@ const App = () => {
         <Route path="/terms" element={<Terms />} />
         <Route path="/cookie-policy" element={<CookiePolicy />} />
         <Route path="/accessibility" element={<Accessibility />} />
+        <Route path="/faq" element={<Faq />} />
 
         {/* Private routes */}
         <Route element={<Body />}>
