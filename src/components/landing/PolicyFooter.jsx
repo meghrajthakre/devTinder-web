@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Instagram,
   Twitter,
   Facebook,
   Youtube,
 } from "lucide-react";
+import PromoCode from '../../FAQ/PromoCode';
+import PromoCodeModal from "../../FAQ/PromoCodeModal";
+
 
 const PolicyFooter = () => {
+  const [openPromo, setOpenPromo] = useState(false);
   return (
     <footer className="bg-white text-gray-700 border-t">
       <div className="max-w-7xl mx-auto px-6 py-12">
@@ -51,7 +55,9 @@ const PolicyFooter = () => {
             <ul className="space-y-2 text-sm">
               <li className="fade-text"><a href="/faq" className="hover:text-primary">FAQ</a></li>
               <li className="fade-text"><a href="/contact" className="hover:text-primary">Contact</a></li>
-              <li className="fade-text"><a href="/promo-code" className="hover:text-primary">Promo Code</a></li>
+              <li className="fade-text"><a
+                onClick={() => setOpenPromo(true)}
+              className="hover:text-primary cursor-pointer">Enter Promo Code</a></li>
             </ul>
           </div>
         </div>
@@ -80,6 +86,10 @@ There really is something for everyone on Tinder. Want to get into a relationshi
         </div>
 
       </div>
+         <PromoCodeModal
+        isOpen={openPromo}
+        onClose={() => setOpenPromo(false)}
+      />
     </footer>
   );
 };

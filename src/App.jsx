@@ -27,6 +27,7 @@ import CookiePolicy from './components/legal/CookiePolicy';
 import PrivacyPolicy from './components/legal/PrivacyPolicy';
 import Terms from './components/legal/Terms';
 import Faq from "./FAQ/Faq";
+import Contact from "../src/FAQ/Contact";
 
 
 const App = () => {
@@ -142,6 +143,7 @@ const App = () => {
         <Route path="/cookie-policy" element={<CookiePolicy />} />
         <Route path="/accessibility" element={<Accessibility />} />
         <Route path="/faq" element={<Faq />} />
+        <Route path="/contact" element={<Contact />} />
 
         {/* Private routes */}
         <Route element={<Body />}>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import Back from "../components/buttons/Back";
 
 const Faq = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -100,6 +101,11 @@ const Faq = () => {
   return (
     <section className="w-full bg-black text-white py-14 overflow-y-auto">
       <div className="max-w-5xl mx-auto px-6">
+
+          <div className="absolute top-6 left-6">
+            <Back/>
+            </div>  
+
         <h2 className="text-4xl font-bold mb-12 text-center">
           Frequently Asked Questions
         </h2>
