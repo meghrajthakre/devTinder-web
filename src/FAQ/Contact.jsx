@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Mail, Loader2 } from "lucide-react";
 import axios from "axios";
 import { BASE_URL } from '../utils/constant';
+import Back from '../components/buttons/Back'
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -75,6 +76,10 @@ const Contact = () => {
 
     return (
         <section className="min-h-screen bg-black text-white flex items-center justify-center px-4 py-12">
+            <div className="absolute top-6 left-6">
+                <Back />
+            </div>
+
             <div className="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-3xl p-8 shadow-lg">
                 <h2 className="text-3xl font-bold mb-2 text-center">
                     Contact DevStinder
