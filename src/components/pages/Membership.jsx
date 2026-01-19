@@ -39,11 +39,33 @@ const Membership = () => {
             }, {
                 withCredentials: true
             })
+            console.log(res.data)
+            const { amount, currency, key, orderId, notes , } = res.data;
 
-            const data = res.data;
-            
+            const options = {
+                key: key,
+                amount,
+                currency,
+                name: "Devs Tinder",
+                description: "Membership Purchase",
+                image: "/logo.png",
+                order_id: orderId,
+                prefill: {
+                    name: notes.firstName + ' ' + notes.lastName,
+                    email: notes.email,
+                    contact: '999999999'
+                },
+                theme: {
+                    color: "#3399cc"
+                }
+            };
+
+            const rzp = new window.Razorpay(options);
+            rzp.open();
+
+
         } catch (error) {
-            conso
+            console.log(error)
         }
     }
 
