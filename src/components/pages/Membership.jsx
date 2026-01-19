@@ -1,10 +1,12 @@
 import React from "react";
 import { Check, Sparkles } from "lucide-react";
+import axios from "axios";
+import { BASE_URL } from '../../utils/constant';
 
 const plans = [
     {
         name: "Premium",
-        price: "₹299 / month",
+        price: "₹399 / month",
         tag: "Popular",
         features: [
             "Unlimited likes",
@@ -29,6 +31,24 @@ const plans = [
 ];
 
 const Membership = () => {
+
+    const handlePayments = async (type) => {
+        try {
+            const res = await axios.post(BASE_URL + '/payment/create', {
+                membershipType: type
+            }, {
+                withCredentials: true
+            })
+
+            const data = res.data;
+            
+        } catch (error) {
+            conso
+        }
+    }
+
+
+
     return (
         <div
             className=" mt-[64px] bg-gradient-to-b  from-base-100 via-base-200 to-base-100 px-6 py-2 overflow-y-scroll pb-18"
@@ -98,8 +118,9 @@ const Membership = () => {
                         </ul>
 
                         <button
+                            onClick={() => handlePayments(plan.name)}
                             className={`btn btn-sm w-full rounded-full font-medium tracking-wide
-    ${plan.highlight
+                                     ${plan.highlight
                                     ? "btn-warning text-neutral hover:brightness-110"
                                     : "btn-outline btn-primary"
                                 }`}
