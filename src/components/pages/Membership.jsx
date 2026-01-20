@@ -48,7 +48,6 @@ const Membership = () => {
                 currency,
                 name: "Devs Tinder",
                 description: "Membership Purchase",
-                image: "/logo.png",
                 order_id: orderId,
                 prefill: {
                     name: notes.firstName + ' ' + notes.lastName,
@@ -56,7 +55,7 @@ const Membership = () => {
                     contact: '999999999'
                 },
                 theme: {
-                    color: "#3399cc"
+                    color: "#33a1cc"
                 }
             };
 
