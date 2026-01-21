@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Check, Sparkles } from "lucide-react";
-import axios from "axios";
+import axios, { Axios } from "axios";
 import { BASE_URL } from '../../utils/constant';
 
 const plans = [
@@ -31,6 +31,16 @@ const plans = [
 ];
 
 const Membership = () => {
+    const paymentVerification = () => {
+        const res = axios.get(BASE_URL + '/payment/verify', {
+            withCredentials: true
+        })
+        console.log(res.data)
+    }
+
+    useEffect(() => {
+        paymentVerification()
+    }, [])
 
     const handlePayments = async (type) => {
         try {
@@ -40,7 +50,7 @@ const Membership = () => {
                 withCredentials: true
             })
             console.log(res.data)
-            const { amount, currency, key, orderId, notes , } = res.data;
+            const { amount, currency, key, orderId, notes, } = res.data;
 
             const options = {
                 key: key,
@@ -67,8 +77,6 @@ const Membership = () => {
             console.log(error)
         }
     }
-
-
 
     return (
         <div
